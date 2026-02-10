@@ -3,10 +3,15 @@ import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
+  standalone: true
 })
 export class App {
-  protected readonly title = signal('inventariofront');
+  activeSection = signal<'dashboard' | 'productos' | 'stock' | 'facturacion' | 'reportes' | 'proveedores'>('dashboard');
+
+  setSection(section: 'dashboard' | 'productos' | 'stock' | 'facturacion' | 'reportes' | 'proveedores') {
+    this.activeSection.set(section);
+  }
 }
