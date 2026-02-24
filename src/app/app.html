@@ -1,33 +1,35 @@
-<div class="min-h-screen bg-gradient-to-br from-coffee-50 via-coffee-100 to-coffee-200 text-coffee-900">
+<div class="min-h-screen bg-linear-to-br from-coffee-50 via-coffee-100 to-coffee-200 text-coffee-900">
 	<!-- Top bar -->
 	<header class="sticky top-0 z-40 border-b border-coffee-300 bg-green-600/90 backdrop-blur animate-fadeIn">
-		<div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-			<div class="flex items-center gap-3 animate-slideIn">
-				<div class="flex h-10 w-10 items-center justify-center rounded-xl bg-coffee-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110">
+		<div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:py-4 sm:px-6 lg:px-8">
+			<div class="flex items-center gap-2 sm:gap-3 animate-slideIn">
+				<div class="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-xl bg-coffee-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110">
 					☕
 				</div>
 				<div>
-					<h1 class="text-lg font-semibold tracking-wide">Caficultura Verde</h1>
-					<p class="text-xs text-white-600">Inventario de abonos y fertilizantes</p>
+					<h1 class="text-base sm:text-lg font-semibold tracking-wide">Caficultura Verde</h1>
+					<p class="text-xs text-white-600 hidden sm:block">Inventario de abonos y fertilizantes</p>
 				</div>
 			</div>
 			<div class="flex items-center gap-2 animate-fadeIn">
-				<button class="rounded-lg border border-coffee-300 bg-white px-3 py-2 text-sm font-medium text-coffee-700 hover:bg-coffee-50 transition-all duration-200 hover:scale-105">
+				<button class="hidden sm:block rounded-lg border border-coffee-300 bg-white px-3 py-2 text-sm font-medium text-coffee-700 hover:bg-coffee-50 transition-all duration-200 hover:scale-105">
 					Ayuda
 				</button>
-				<button class="rounded-lg bg-gradient-to-r from-coffee-600 to-coffee-700 px-4 py-2 text-sm font-semibold text-white shadow-lg hover:from-coffee-700 hover:to-coffee-800 transition-all duration-300 hover:scale-105 hover:shadow-xl">
-					Nuevo movimiento
+				<button
+					(click)="setSection('stock')"
+					class="rounded-lg bg-linear-to-r from-coffee-600 to-coffee-700 px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold text-white shadow-lg hover:from-coffee-700 hover:to-coffee-800 transition-all duration-300 hover:scale-105 hover:shadow-xl whitespace-nowrap">
+					+ Movimiento
 				</button>
 			</div>
 		</div>
 	</header>
 
-	<div class="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-4 py-6 sm:px-6 lg:px-8 lg:grid-cols-12">
+	<div class="mx-auto grid max-w-7xl grid-cols-1 gap-4 sm:gap-6 px-4 py-4 sm:py-6 sm:px-6 lg:px-8 lg:grid-cols-12">
 		<!-- Sidebar -->
 		<aside class="lg:col-span-3 animate-slideIn">
-			<nav class="rounded-2xl border border-coffee-300 bg-white p-4 shadow-lg hover:shadow-xl transition-shadow duration-300">
+			<nav class="rounded-2xl border border-coffee-300 bg-white p-3 sm:p-4 shadow-lg hover:shadow-xl transition-shadow duration-300">
 				<p class="mb-3 text-xs font-semibold uppercase tracking-widest text-coffee-600">Menú</p>
-				<ul class="space-y-2 text-sm">
+				<ul class="space-y-1 sm:space-y-2 text-sm">
 					<li>
 						<button
 							class="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left font-semibold text-coffee-800 transition-all duration-200 hover:scale-105"
@@ -35,7 +37,7 @@
 							[class.shadow-lg]="activeSection() === 'dashboard'"
 							(click)="setSection('dashboard')"
 						>
-							Informacion
+							📊 Información
 						</button>
 					</li>
 					<li>
@@ -45,7 +47,7 @@
 							[class.font-semibold]="activeSection() === 'productos'"
 							(click)="setSection('productos')"
 						>
-							Productos
+							📦 Productos
 						</button>
 					</li>
 					<li>
@@ -55,7 +57,7 @@
 							[class.font-semibold]="activeSection() === 'stock'"
 							(click)="setSection('stock')"
 						>
-							Stock
+							📥 Stock
 						</button>
 					</li>
 					<li>
@@ -65,7 +67,7 @@
 							[class.font-semibold]="activeSection() === 'facturacion'"
 							(click)="setSection('facturacion')"
 						>
-							Facturación
+							🧾 Facturación
 						</button>
 					</li>
 					<li>
@@ -75,7 +77,7 @@
 							[class.font-semibold]="activeSection() === 'reportes'"
 							(click)="setSection('reportes')"
 						>
-							Reportes
+							📈 Reportes
 						</button>
 					</li>
 					<li>
@@ -85,18 +87,38 @@
 							[class.font-semibold]="activeSection() === 'proveedores'"
 							(click)="setSection('proveedores')"
 						>
-							Proveedores
+							🏢 Proveedores
 						</button>
 					</li>
+					<li>
+    <button
+        class="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-coffee-700 hover:bg-coffee-100 transition-all duration-200 hover:scale-105"
+        [class.bg-coffee-200]="activeSection() === 'categorias'"
+        [class.font-semibold]="activeSection() === 'categorias'"
+        (click)="setSection('categorias')"
+    >
+        📂 Categorías
+    </button>
+</li>
+					<li>
+    <button
+        class="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-coffee-700 hover:bg-coffee-100 transition-all duration-200 hover:scale-105"
+        [class.bg-coffee-200]="activeSection() === 'clientes'"
+        [class.font-semibold]="activeSection() === 'clientes'"
+        (click)="setSection('clientes')"
+    >
+        👥 Clientes
+    </button>
+</li>
 				</ul>
 			</nav>
 
 		<div class="mt-6 rounded-2xl bg-coffee-700 p-5 text-white shadow-xl hover:shadow-2xl transition-all duration-300 animate-fadeIn">
 			<p class="text-sm font-semibold">Estado del inventario</p>
-			<p class="mt-1 text-3xl font-bold animate-pulse">92%</p>
-			<p class="mt-2 text-xs text-white">Productos con stock saludable</p>
-				<button class="mt-4 w-full rounded-lg bg-white/10 px-3 py-2 text-xs font-semibold hover:bg-white/20 transition-all duration-200 hover:scale-105">
-					Ver alertas
+			<p class="mt-1 text-3xl font-bold animate-pulse">{{ porcentajeStockSaludable }}%</p>
+			<p class="mt-2 text-xs text-white">Stock actual vs stock máximo</p>
+				<button (click)="setSection('reportes')" class="mt-4 w-full rounded-lg bg-white/10 px-3 py-2 text-xs font-semibold hover:bg-white/20 transition-all duration-200 hover:scale-105">
+					Ver reportes
 				</button>
 			</div>
 		</aside>
@@ -105,300 +127,78 @@
 		<main class="lg:col-span-9">
 			<!-- KPI cards -->
 			<section class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4 animate-fadeIn" [class.hidden]="activeSection() !== 'dashboard'">
-				<div class="rounded-2xl border border-coffee-300 bg-gradient-to-br from-white to-coffee-50 p-4 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-					<p class="text-xs uppercase tracking-widest text-coffee-600">Stock total</p>
-					<p class="mt-2 text-2xl font-bold">1,245 sacos</p>
-					<p class="text-xs text-coffee-500">+5% esta semana</p>
-				</div>
-				<div class="rounded-2xl border border-coffee-300 bg-gradient-to-br from-white to-coffee-50 p-4 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-					<p class="text-xs uppercase tracking-widest text-coffee-600">Bajo stock</p>
-					<p class="mt-2 text-2xl font-bold text-red-600">8 productos</p>
-					<p class="text-xs text-coffee-500">Reponer en 3 días</p>
-				</div>
-				<div class="rounded-2xl border border-coffee-300 bg-gradient-to-br from-white to-coffee-50 p-4 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-					<p class="text-xs uppercase tracking-widest text-coffee-600">Entradas</p>
-					<p class="mt-2 text-2xl font-bold">+210</p>
-					<p class="text-xs text-coffee-500">Últimos 7 días</p>
-				</div>
-				<div class="rounded-2xl border border-coffee-300 bg-gradient-to-br from-white to-coffee-50 p-4 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-					<p class="text-xs uppercase tracking-widest text-coffee-600">Ventas</p>
-					<p class="mt-2 text-2xl font-bold">$8.4M</p>
-					<p class="text-xs text-coffee-500">Facturación mensual</p>
-				</div>
+				@if (loading) {
+					<div class="col-span-full text-center py-8">
+						<p class="text-coffee-600">⏳ Cargando estadísticas...</p>
+					</div>
+				} @else if (error) {
+					<div class="col-span-full text-center py-8">
+						<p class="text-red-600">❌ {{ error }}</p>
+						<button (click)="cargarDatos()" class="mt-2 text-coffee-600 hover:text-coffee-800">Reintentar</button>
+					</div>
+				} @else {
+					<div class="rounded-2xl border border-coffee-300 bg-linear-to-br from-white to-coffee-50 p-4 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+						<p class="text-xs uppercase tracking-widest text-coffee-600">Stock total</p>
+						<p class="mt-2 text-2xl font-bold">{{ stats.stock_total }} unidades</p>
+						<p class="text-xs text-coffee-500">Total en inventario</p>
+					</div>
+					<div class="rounded-2xl border border-coffee-300 bg-linear-to-br from-white to-coffee-50 p-4 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+						<p class="text-xs uppercase tracking-widest text-coffee-600">Bajo stock</p>
+						<p class="mt-2 text-2xl font-bold text-red-600">{{ stats.productos_bajo_stock }} productos</p>
+						<p class="text-xs text-coffee-500">Requieren atención</p>
+					</div>
+					<div class="rounded-2xl border border-coffee-300 bg-linear-to-br from-white to-coffee-50 p-4 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+						<p class="text-xs uppercase tracking-widest text-coffee-600">Entradas</p>
+						<p class="mt-2 text-2xl font-bold">+{{ stats.entradas_recientes }}</p>
+						<p class="text-xs text-coffee-500">Últimos 7 días</p>
+					</div>
+					<div class="rounded-2xl border border-coffee-300 bg-linear-to-br from-white to-coffee-50 p-4 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+						<p class="text-xs uppercase tracking-widest text-coffee-600">Ventas</p>
+						<p class="mt-2 text-2xl font-bold">${{ formatearPrecio(stats.ventas_mes) }}</p>
+						<p class="text-xs text-coffee-500">Facturación mensual</p>
+					</div>
+				}
 			</section>
 
 			<!-- Productos -->
-			<section id="productos" class="mt-8 rounded-2xl border border-coffee-300 bg-gradient-to-br from-white to-coffee-50 p-6 shadow-lg hover:shadow-xl transition-all duration-300 animate-fadeIn" [class.hidden]="activeSection() !== 'productos'">
-				<div class="flex flex-wrap items-center justify-between gap-3">
-					<div>
-						<h2 class="text-lg font-semibold">Productos</h2>
-						<p class="text-sm text-coffee-600">Catálogo de abonos y fertilizantes para cafetales</p>
-					</div>
-					<div class="flex gap-2">
-					<input class="w-48 rounded-lg border border-coffee-300 px-3 py-2 text-sm focus:border-coffee-500 focus:ring-2 focus:ring-coffee-300 transition-all duration-200" placeholder="Buscar producto" />
-					<button class="rounded-lg bg-coffee-600 px-4 py-2 text-sm font-semibold text-white hover:bg-coffee-700 transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-xl">Agregar</button>
-					</div>
-				</div>
+			@if (activeSection() === 'productos') {
+				<app-productos></app-productos>
+			}
 
-				<div class="mt-4 overflow-x-auto">
-					<table class="w-full text-left text-sm">
-						<thead class="text-xs uppercase text-coffee-600">
-							<tr class="border-b border-coffee-200">
-								<th class="py-2">Producto</th>
-								<th class="py-2">Categoría</th>
-								<th class="py-2">Proveedor</th>
-								<th class="py-2">Stock</th>
-								<th class="py-2">Precio</th>
-								<th class="py-2">Estado</th>
-							</tr>
-						</thead>
-						<tbody class="divide-y divide-coffee-100">
-								<tr class="hover:bg-coffee-50 transition-colors duration-150">
-								<td class="py-3 font-medium">Abono Orgánico Premium</td>
-								<td>Orgánico</td>
-								<td>BioCafé</td>
-								<td>320 sacos</td>
-								<td>$45.000</td>
-								<td><span class="rounded-full bg-emerald-100 px-2 py-1 text-xs font-semibold text-emerald-700">Disponible</span></td>
-							</tr>
-							<tr>
-								<td class="py-3 font-medium">Fertilizante NPK 20-20-20</td>
-								<td>Mineral</td>
-								<td>AgroAndes</td>
-								<td>45 sacos</td>
-								<td>$62.000</td>
-								<td><span class="rounded-full bg-amber-100 px-2 py-1 text-xs font-semibold text-amber-700">Bajo stock</span></td>
-							</tr>
-							<tr>
-								<td class="py-3 font-medium">Enmienda de Cal Dolomita</td>
-								<td>Corrector pH</td>
-								<td>Suelo Verde</td>
-								<td>180 sacos</td>
-								<td>$38.000</td>
-								<td><span class="rounded-full bg-emerald-100 px-2 py-1 text-xs font-semibold text-emerald-700">Disponible</span></td>
-							</tr>
-							<tr>
-								<td class="py-3 font-medium">Bioestimulante Raíz Fuerte</td>
-								<td>Bioestimulante</td>
-								<td>CaféLab</td>
-								<td>12 sacos</td>
-								<td>$75.000</td>
-								<td><span class="rounded-full bg-red-100 px-2 py-1 text-xs font-semibold text-red-700">Crítico</span></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</section>
-
-			<!-- Stock y movimientos -->
-			<section id="stock" class="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-2 animate-fadeIn" [class.hidden]="activeSection() !== 'stock'">
-				<div class="rounded-2xl border border-coffee-300 bg-gradient-to-br from-white to-coffee-50 p-6 shadow-lg hover:shadow-xl transition-all duration-300">
-					<h2 class="text-lg font-semibold">Agregar stock</h2>
-					<p class="text-sm text-coffee-600">Registrar entradas de inventario</p>
-					<form class="mt-4 space-y-4">
-						<div>
-							<label class="text-xs font-semibold text-coffee-700">Producto</label>
-							<select class="mt-1 w-full rounded-lg border border-coffee-300 px-3 py-2 text-sm focus:border-coffee-500 focus:ring-2 focus:ring-coffee-300 transition-all duration-200">
-								<option>Abono Orgánico Premium</option>
-	    							<option>Fertilizante NPK 20-20-20</option>
-								<option>Enmienda de Cal Dolomita</option>
-							</select>
-						</div>
-						<div class="grid grid-cols-2 gap-3">
-							<div>
-								<label class="text-xs font-semibold text-coffee-700">Cantidad</label>
-								<input class="mt-1 w-full rounded-lg border border-coffee-300 px-3 py-2 text-sm focus:border-coffee-500 focus:ring-2 focus:ring-coffee-300 transition-all duration-200" placeholder="Sacos" />
-							</div>
-							<div>
-								<label class="text-xs font-semibold text-coffee-700">Fecha</label>
-								<input type="date" class="mt-1 w-full rounded-lg border border-coffee-300 px-3 py-2 text-sm focus:border-coffee-500 focus:ring-2 focus:ring-coffee-300 transition-all duration-200" />
-							</div>
-						</div>
-						<div>
-							<label class="text-xs font-semibold text-coffee-700">Proveedor</label>
-							<input class="mt-1 w-full rounded-lg border border-coffee-300 px-3 py-2 text-sm focus:border-coffee-500 focus:ring-2 focus:ring-coffee-300 transition-all duration-200" placeholder="Nombre del proveedor" />
-						</div>
-						<button class="w-full rounded-lg bg-coffee-600 px-4 py-2 text-sm font-semibold text-white hover:bg-coffee-700 transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-xl">Guardar entrada</button>
-					</form>
-				</div>
-
-				<div class="rounded-2xl border border-emerald-200 bg-white p-6 shadow-sm">
-					<h2 class="text-lg font-semibold">Movimientos recientes</h2>
-					<p class="text-sm text-coffee-600">Entradas y salidas</p>
-					<ul class="mt-4 space-y-3 text-sm">
-						<li class="flex items-center justify-between rounded-lg bg-coffee-50 px-4 py-3 hover:bg-coffee-100 transition-all duration-200 hover:scale-105">
-							<div>
-								<p class="font-semibold">Entrada · Abono Orgánico</p>
-								<p class="text-xs text-coffee-600">Proveedor BioCafé</p>
-							</div>
-							<div class="text-right">
-								<p class="font-semibold text-coffee-700">+60</p>
-								<p class="text-xs text-coffee-500">9 Feb 2026</p>
-							</div>
-						</li>
-						<li class="flex items-center justify-between rounded-lg bg-coffee-50 px-4 py-3">
-							<div>
-								<p class="font-semibold">Salida · NPK 20-20-20</p>
-								<p class="text-xs text-coffee-600">Venta #F-0231</p>
-							</div>
-							<div class="text-right">
-								<p class="font-semibold text-red-600">-18</p>
-								<p class="text-xs text-coffee-500">8 Feb 2026</p>
-							</div>
-						</li>
-						<li class="flex items-center justify-between rounded-lg bg-coffee-50 px-4 py-3">
-							<div>
-								<p class="font-semibold">Entrada · Dolomita</p>
-								<p class="text-xs text-coffee-600">Proveedor Suelo Verde</p>
-							</div>
-							<div class="text-right">
-								<p class="font-semibold text-coffee-700">+90</p>
-								<p class="text-xs text-coffee-500">7 Feb 2026</p>
-							</div>
-						</li>
-					</ul>
-				</div>
-			</section>
-
+		<!-- Categorías -->
+		@if (activeSection() === 'categorias') {
+			<app-categorias></app-categorias>
+		}
+		<!-- Stock y movimientos -->
+		@if (activeSection() === 'stock') {
+			<app-stock></app-stock>
+		}
 			<!-- Facturación -->
-			<section id="facturacion" class="mt-8 rounded-2xl border border-coffee-300 bg-gradient-to-br from-white to-coffee-50 p-6 shadow-lg hover:shadow-xl transition-all duration-300 animate-fadeIn" [class.hidden]="activeSection() !== 'facturacion'">
-				<div class="flex flex-wrap items-center justify-between gap-3">
-					<div>
-						<h2 class="text-lg font-semibold">Facturación</h2>
-						<p class="text-sm text-coffee-600">Crear y revisar facturas de venta</p>
-					</div>
-					<button class="rounded-lg bg-coffee-600 px-4 py-2 text-sm font-semibold text-white hover:bg-coffee-700 transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-xl">Nueva factura</button>
-				</div>
+			@if (activeSection() === 'facturacion') {
+				<app-facturacion></app-facturacion>
+			}
 
-				<div class="mt-4 grid grid-cols-1 gap-6 lg:grid-cols-3">
-					<div class="lg:col-span-2">
-						<table class="w-full text-left text-sm">
-							<thead class="text-xs uppercase text-coffee-600">
-								<tr class="border-b border-coffee-200">
-									<th class="py-2">Factura</th>
-									<th class="py-2">Cliente</th>
-									<th class="py-2">Fecha</th>
-									<th class="py-2">Total</th>
-									<th class="py-2">Estado</th>
-								</tr>
-							</thead>
-							<tbody class="divide-y divide-coffee-100">
-								<tr class="hover:bg-coffee-50 transition-colors duration-150">
-									<td class="py-3 font-medium">F-0231</td>
-									<td>Cooperativa La Loma</td>
-									<td>08/02/26</td>
-									<td>$1.250.000</td>
-									<td><span class="rounded-full bg-coffee-100 px-2 py-1 text-xs font-semibold text-coffee-700">Disponible</span></td>
-								</tr>
-								<tr class="hover:bg-coffee-50 transition-colors duration-150">
-									<td class="py-3 font-medium">F-0230</td>
-									<td>Finca El Progreso</td>
-									<td>06/02/26</td>
-									<td>$760.000</td>
-									<td><span class="rounded-full bg-amber-100 px-2 py-1 text-xs font-semibold text-amber-700">Pendiente</span></td>
-								</tr>
-								<tr class="hover:bg-coffee-50 transition-colors duration-150">
-									<td class="py-3 font-medium">F-0229</td>
-									<td>AgroCafé Andino</td>
-									<td>05/02/26</td>
-									<td>$2.420.000</td>
-									<td><span class="rounded-full bg-emerald-100 px-2 py-1 text-xs font-semibold text-emerald-700">Pagada</span></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
+			<!-- Reportes -->
+			@if (activeSection() === 'reportes') {
+				<app-reportes [stats]="stats"></app-reportes>
+			}
 
-					<div class="rounded-2xl bg-gradient-to-br from-coffee-50 to-coffee-100 p-5 shadow-md">
-						<h3 class="text-sm font-semibold text-coffee-700">Resumen del mes</h3>
-						<div class="mt-3 space-y-2 text-sm">
-							<div class="flex justify-between">
-								<span>Ventas</span>
-								<span class="font-semibold">$8.4M</span>
-							</div>
-							<div class="flex justify-between">
-								<span>Costos</span>
-								<span class="font-semibold">$5.1M</span>
-							</div>
-							<div class="flex justify-between">
-								<span>Utilidad</span>
-							<span class="font-semibold text-coffee-700">$3.3M</span>
-							</div>
-						</div>
-						<button class="mt-4 w-full rounded-lg border border-coffee-300 bg-white px-3 py-2 text-xs font-semibold text-coffee-700 hover:bg-coffee-50 transition-all duration-200 hover:scale-105">Descargar reporte</button>
-					</div>
-				</div>
-			</section>
+			<!-- Proveedores -->
+			@if (activeSection() === 'proveedores') {
+				<app-proveedores></app-proveedores>
+			}
 
-			<!-- Reportes y proveedores -->
-			<section id="reportes" class="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-2 animate-fadeIn" [class.hidden]="activeSection() !== 'reportes'">
-				<div class="rounded-2xl border border-coffee-300 bg-gradient-to-br from-white to-coffee-50 p-6 shadow-lg hover:shadow-xl transition-all duration-300">
-					<h2 class="text-lg font-semibold">Reportes rápidos</h2>
-					<p class="text-sm text-coffee-600">Indicadores clave del cultivo cafetero</p>
-					<div class="mt-4 grid grid-cols-2 gap-3 text-sm">
-						<div class="rounded-xl bg-gradient-to-br from-coffee-50 to-coffee-100 p-3 hover:shadow-md transition-all duration-200 hover:scale-105">
-							<p class="text-xs text-coffee-600">Rotación</p>
-							<p class="mt-1 text-xl font-semibold">28 días</p>
-						</div>
-						<div class="rounded-xl bg-gradient-to-br from-coffee-50 to-coffee-100 p-3 hover:shadow-md transition-all duration-200 hover:scale-105">
-							<p class="text-xs text-coffee-600">Lote crítico</p>
-							<p class="mt-1 text-xl font-semibold text-red-600">NPK 20-20-20</p>
-						</div>
-						<div class="rounded-xl bg-gradient-to-br from-coffee-50 to-coffee-100 p-3 hover:shadow-md transition-all duration-200 hover:scale-105">
-							<p class="text-xs text-coffee-600">Top producto</p>
-							<p class="mt-1 text-xl font-semibold">Abono Orgánico</p>
-						</div>
-						<div class="rounded-xl bg-gradient-to-br from-coffee-50 to-coffee-100 p-3 hover:shadow-md transition-all duration-200 hover:scale-105">
-							<p class="text-xs text-coffee-600">Consumo semanal</p>
-							<p class="mt-1 text-xl font-semibold">+12%</p>
-						</div>
-					</div>
-				</div>
-
-				<div class="rounded-2xl border border-coffee-300 bg-gradient-to-br from-white to-coffee-50 p-6 shadow-lg hover:shadow-xl transition-all duration-300">
-					<h2 class="text-lg font-semibold">Indicador ambiental</h2>
-					<p class="text-sm text-coffee-600">Consumo responsable y sostenibilidad</p>
-					<div class="mt-4 rounded-2xl bg-gradient-to-br from-coffee-100 to-coffee-200 p-4 shadow-inner">
-						<p class="text-xs uppercase tracking-widest text-coffee-800">Huella de carbono</p>
-						<p class="mt-2 text-2xl font-bold text-coffee-800">-12%</p>
-						<p class="text-xs text-coffee-700">Comparado con el mes anterior</p>
-					</div>
-				</div>
-			</section>
-
-			<section id="proveedores" class="mt-8 rounded-2xl border border-coffee-300 bg-gradient-to-br from-white to-coffee-50 p-6 shadow-lg hover:shadow-xl transition-all duration-300 animate-fadeIn" [class.hidden]="activeSection() !== 'proveedores'">
-				<h2 class="text-lg font-semibold">Proveedores</h2>
-				<p class="text-sm text-coffee-600">Contactos principales</p>
-				<ul class="mt-4 space-y-3 text-sm">
-					<li class="flex items-center justify-between rounded-lg border border-coffee-200 px-4 py-3 hover:bg-coffee-50 hover:border-coffee-300 transition-all duration-200 hover:scale-105">
-						<div>
-							<p class="font-semibold">BioCafé</p>
-							<p class="text-xs text-coffee-600">abonos@biocafe.co</p>
-						</div>
-							<span class="rounded-full bg-coffee-100 px-2 py-1 text-xs font-semibold text-coffee-700">Activo</span>
-						</li>
-						<li class="flex items-center justify-between rounded-lg border border-coffee-200 px-4 py-3 hover:bg-coffee-50 hover:border-coffee-300 transition-all duration-200 hover:scale-105">
-						<div>
-							<p class="font-semibold">AgroAndes</p>
-							<p class="text-xs text-coffee-600">ventas@agroandes.co</p>
-						</div>
-						<span class="rounded-full bg-emerald-100 px-2 py-1 text-xs font-semibold text-emerald-700">Activo</span>
-					</li>
-					<li class="flex items-center justify-between rounded-lg border border-emerald-100 px-4 py-3">
-						<div>
-							<p class="font-semibold">Suelo Verde</p>
-							<p class="text-xs text-coffee-600">soporte@sueloverde.co</p>
-						</div>
-						<span class="rounded-full bg-amber-100 px-2 py-1 text-xs font-semibold text-amber-700">Pendiente</span>
-					</li>
-				</ul>
-			</section>
+			<!-- Clientes -->
+			@if (activeSection() === 'clientes') {
+				<app-clientes></app-clientes>
+			}
 		</main>
 	</div>
 
-	<footer class="bg-green-700">
-		<div class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-6 text-xs text-white sm:px-6 lg:px-8">
-			<p class="hover:scale-105 transition-transform duration-200">© 2026 DANIEL ROJAS AREVALO</p>
-			<p class="hover:scale-105 transition-transform duration-200">Hecho con 💚 para el campo cafetero</p>
+	<footer class="bg-green-700 mt-8">
+		<div class="mx-auto flex max-w-7xl flex-col sm:flex-row items-center justify-between gap-2 sm:gap-3 px-4 py-4 sm:py-6 text-xs text-white sm:px-6 lg:px-8">
+			<p class="hover:scale-105 transition-transform duration-200 text-center sm:text-left">© 2026 DANIEL ROJAS AREVALO</p>
+			<p class="hover:scale-105 transition-transform duration-200 text-center sm:text-right">Hecho con 💚 para el campo cafetero</p>
 		</div>
 	</footer>
 </div>

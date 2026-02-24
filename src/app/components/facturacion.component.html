@@ -1,0 +1,200 @@
+<div class="rounded-2xl border border-coffee-300 bg-linear-to-br from-white to-coffee-50 p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300">
+  <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+    <div>
+      <h2 class="text-lg font-semibold">Facturación</h2>
+      <p class="text-sm text-coffee-600">Crear y revisar facturas de venta</p>
+    </div>
+    <button
+      type="button"
+      (click)="abrirFormulario()"
+      class="rounded-lg bg-coffee-600 px-4 py-2 text-sm font-semibold text-white hover:bg-coffee-700 transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-xl whitespace-nowrap">
+      + Nueva factura
+    </button>
+  </div>
+
+  <!-- Formulario nueva factura -->
+  <div [hidden]="!mostrarFormulario" class="mb-6 rounded-xl border border-coffee-200 bg-white p-4 shadow-sm">
+      <h3 class="mb-3 text-sm font-semibold text-coffee-700">{{ facturaEditando ? '✏️ Editar Factura' : '🧾 Nueva Factura' }}</h3>
+
+      @if (error) {
+        <div class="mb-3 rounded-lg bg-red-50 border border-red-200 p-3 text-sm text-red-700">⚠️ {{ error }}</div>
+      }
+
+      <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+        <div>
+          <label class="text-xs font-semibold text-coffee-700">N° Factura *</label>
+          <input type="text" [(ngModel)]="formulario.numero_factura" name="numero_factura"
+            class="mt-1 w-full rounded-lg border border-coffee-300 px-3 py-2 text-sm focus:border-coffee-500 focus:ring-2 focus:ring-coffee-300" />
+        </div>
+        <div>
+          <label class="text-xs font-semibold text-coffee-700">Cliente *</label>
+          <select [(ngModel)]="formulario.cliente" name="cliente"
+            class="mt-1 w-full rounded-lg border border-coffee-300 px-3 py-2 text-sm focus:border-coffee-500 focus:ring-2 focus:ring-coffee-300">
+            <option [value]="0">-- Seleccionar cliente --</option>
+            @for (c of clientes; track c.id) {
+              <option [value]="c.id">{{ c.nombre }}</option>
+            }
+          </select>
+        </div>
+        <div>
+          <label class="text-xs font-semibold text-coffee-700">Fecha Emisión</label>
+          <input type="date" [(ngModel)]="formulario.fecha_emision" name="fecha_emision"
+            class="mt-1 w-full rounded-lg border border-coffee-300 px-3 py-2 text-sm focus:border-coffee-500 focus:ring-2 focus:ring-coffee-300" />
+        </div>
+        <div>
+          <label class="text-xs font-semibold text-coffee-700">Impuestos (%)</label>
+          <input type="number" [(ngModel)]="formulario.impuestos" name="impuestos" min="0" max="100"
+            class="mt-1 w-full rounded-lg border border-coffee-300 px-3 py-2 text-sm focus:border-coffee-500 focus:ring-2 focus:ring-coffee-300" />
+        </div>
+        <div>
+          <label class="text-xs font-semibold text-coffee-700">Estado</label>
+          <select [(ngModel)]="formulario.estado" name="estado"
+            class="mt-1 w-full rounded-lg border border-coffee-300 px-3 py-2 text-sm focus:border-coffee-500 focus:ring-2 focus:ring-coffee-300">
+            <option value="pendiente">Pendiente</option>
+            <option value="pagada">Pagada</option>
+            <option value="cancelada">Cancelada</option>
+          </select>
+        </div>
+        <div>
+          <label class="text-xs font-semibold text-coffee-700">Fecha Vencimiento</label>
+          <input type="date" [(ngModel)]="formulario.fecha_vencimiento" name="fecha_vencimiento"
+            class="mt-1 w-full rounded-lg border border-coffee-300 px-3 py-2 text-sm focus:border-coffee-500 focus:ring-2 focus:ring-coffee-300" />
+        </div>
+        <div class="sm:col-span-2">
+          <label class="text-xs font-semibold text-coffee-700">Observaciones</label>
+          <textarea [(ngModel)]="formulario.observaciones" name="observaciones" rows="2"
+            class="mt-1 w-full rounded-lg border border-coffee-300 px-3 py-2 text-sm focus:border-coffee-500 focus:ring-2 focus:ring-coffee-300"></textarea>
+        </div>
+      </div>
+
+      <!-- Detalles de factura (solo al crear) -->
+      <div class="mt-4" [hidden]="!!facturaEditando">
+        <div class="flex items-center justify-between mb-2">
+          <label class="text-xs font-semibold text-coffee-700">Productos</label>
+          <button (click)="agregarDetalle()" type="button"
+            class="rounded-lg border border-coffee-300 px-3 py-1 text-xs font-semibold text-coffee-700 hover:bg-coffee-50 transition-all duration-200">
+            + Agregar producto
+          </button>
+        </div>
+        @for (detalle of detalles; track $index) {
+          <div class="mb-2 grid grid-cols-12 gap-2 items-end">
+            <div class="col-span-5">
+              <select [(ngModel)]="detalle.producto" [name]="'producto_' + $index"
+                (change)="onProductoChange(detalle)"
+                class="w-full rounded-lg border border-coffee-300 px-2 py-2 text-xs focus:border-coffee-500">
+                <option [value]="0">-- Producto --</option>
+                @for (p of productos; track p.id) {
+                  <option [value]="p.id">{{ p.nombre }}</option>
+                }
+              </select>
+            </div>
+            <div class="col-span-2">
+              <input type="number" [(ngModel)]="detalle.cantidad" [name]="'cantidad_' + $index"
+                placeholder="Cant." min="1"
+                class="w-full rounded-lg border border-coffee-300 px-2 py-2 text-xs focus:border-coffee-500" />
+            </div>
+            <div class="col-span-3">
+              <input type="number" [(ngModel)]="detalle.precio_unitario" [name]="'precio_' + $index"
+                placeholder="Precio" min="0"
+                class="w-full rounded-lg border border-coffee-300 px-2 py-2 text-xs focus:border-coffee-500" />
+            </div>
+            <div class="col-span-2 flex justify-end">
+              <button (click)="quitarDetalle($index)" type="button"
+                class="rounded p-1 text-red-600 hover:bg-red-100 transition-all duration-200 text-sm">🗑️</button>
+            </div>
+          </div>
+        }
+        <div class="mt-2 text-right text-xs text-coffee-600">
+          Subtotal: <strong>${{ formatearPrecio(calcularSubtotal()) }}</strong> |
+          Total (+ impuestos): <strong class="text-coffee-800">${{ formatearPrecio(calcularTotal()) }}</strong>
+        </div>
+      </div>
+
+      <div class="mt-4 flex gap-2">
+        <button type="button" (click)="guardarFactura()" [disabled]="guardando"
+          class="rounded-lg bg-coffee-600 px-4 py-2 text-sm font-semibold text-white hover:bg-coffee-700 transition-all duration-200 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed">
+          {{ guardando ? '⏳ Guardando...' : (facturaEditando ? '💾 Actualizar' : '🧾 Crear Factura') }}
+        </button>
+        <button type="button" (click)="cancelar()"
+          class="rounded-lg border border-coffee-300 bg-white px-4 py-2 text-sm font-semibold text-coffee-700 hover:bg-coffee-50 transition-all duration-200 hover:scale-105">
+          ❌ Cancelar
+        </button>
+      </div>
+    </div>
+
+  <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
+    <div class="lg:col-span-2 overflow-x-auto -mx-4 sm:mx-0">
+      @if (loading) {
+        <p class="text-center py-8 text-coffee-600">⏳ Cargando facturas...</p>
+      } @else if (facturas.length === 0) {
+        <div class="text-center py-8">
+          <p class="text-coffee-600 mb-2">🧾 No hay facturas registradas</p>
+          <p class="text-xs text-coffee-500">Crea tu primera factura con el botón de arriba</p>
+        </div>
+      } @else {
+        <table class="w-full text-left text-sm" style="min-width: 640px">
+          <thead class="text-xs uppercase text-coffee-600">
+            <tr class="border-b border-coffee-200">
+              <th class="py-2 px-2">Factura</th>
+              <th class="py-2 px-2 hidden sm:table-cell">Cliente</th>
+              <th class="py-2 px-2 hidden md:table-cell">Fecha</th>
+              <th class="py-2 px-2">Total</th>
+              <th class="py-2 px-2">Estado</th>
+              <th class="py-2 px-2"></th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-coffee-100">
+            @for (factura of facturas; track factura.id) {
+              <tr class="hover:bg-coffee-50 transition-colors duration-150">
+                <td class="py-3 px-2 font-medium">{{ factura.numero_factura }}</td>
+                <td class="py-3 px-2 hidden sm:table-cell">{{ factura.cliente_nombre }}</td>
+                <td class="py-3 px-2 hidden md:table-cell">{{ formatearFecha(factura.fecha_emision) }}</td>
+                <td class="py-3 px-2">${{ formatearPrecio(factura.total || '0') }}</td>
+                <td class="py-3 px-2">
+                  <span [class]="'rounded-full px-2 py-1 text-xs font-semibold ' + getBadgeClass(factura.estado)">
+                    {{ factura.estado }}
+                  </span>
+                </td>
+                <td class="py-3 px-2 flex gap-1">
+                  <button (click)="editarFactura(factura)"
+                    class="rounded p-1 text-blue-600 hover:bg-blue-100 transition-all duration-200" title="Editar">✏️</button>
+                  <button (click)="descargarPDF(factura)"
+                    class="rounded p-1 text-emerald-600 hover:bg-emerald-100 transition-all duration-200"
+                    title="Descargar PDF">
+                    <i class="fa-solid fa-file-pdf"></i>
+                  </button>
+                  @if (factura.id) {
+                    <button (click)="eliminarFactura(factura.id)"
+                      class="rounded p-1 text-red-600 hover:bg-red-100 transition-all duration-200" title="Eliminar">🗑️</button>
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    </div>
+
+    <div class="rounded-2xl bg-linear-to-br from-coffee-50 to-coffee-100 p-4 sm:p-5 shadow-md">
+      <h3 class="text-sm font-semibold text-coffee-700">Resumen del mes</h3>
+      <div class="mt-3 space-y-2 text-sm">
+        <div class="flex justify-between">
+          <span>Ventas</span>
+          <span class="font-semibold">${{ formatearPrecio(totalVentas) }}</span>
+        </div>
+        <div class="flex justify-between">
+          <span>Facturas</span>
+          <span class="font-semibold">{{ facturas.length }}</span>
+        </div>
+        <div class="flex justify-between">
+          <span>Pendientes</span>
+          <span class="font-semibold text-amber-600">{{ facturasPendientes }}</span>
+        </div>
+        <div class="flex justify-between">
+          <span>Pagadas</span>
+          <span class="font-semibold text-green-600">{{ facturasPagadas }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
