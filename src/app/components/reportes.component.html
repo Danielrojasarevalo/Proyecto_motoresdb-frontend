@@ -2,7 +2,7 @@
 
   @if (loading) {
     <div class="flex items-center justify-center py-20">
-      <p class="text-coffee-600 text-sm">⏳ Cargando reportes...</p>
+      <p class="text-slate-600 text-sm">⏳ Cargando reportes...</p>
     </div>
   } @else if (error) {
     <div class="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">⚠️ {{ error }}</div>
@@ -10,23 +10,23 @@
 
     <!-- KPI cards -->
     <div class="grid grid-cols-2 gap-4 lg:grid-cols-4">
-      <div class="rounded-2xl border border-green-200 bg-linear-to-br from-white to-green-50 p-4 shadow-md">
-        <p class="text-xs font-semibold uppercase text-green-600">Ventas del mes</p>
-        <p class="mt-1 text-2xl font-bold text-green-700">${{ fmt(resumen?.ventas) }}</p>
-        <p class="text-xs text-green-500 mt-1">Facturas pagadas</p>
+      <div class="rounded-2xl border border-sky-200 bg-linear-to-br from-white to-sky-50 p-4 shadow-md">
+        <p class="text-xs font-semibold uppercase text-sky-600">Ventas del mes</p>
+        <p class="mt-1 text-2xl font-bold text-sky-700">${{ fmt(resumen?.ventas) }}</p>
+        <p class="text-xs text-sky-500 mt-1">Facturas pagadas</p>
       </div>
       <div class="rounded-2xl border border-red-200 bg-linear-to-br from-white to-red-50 p-4 shadow-md">
         <p class="text-xs font-semibold uppercase text-red-600">Costos del mes</p>
         <p class="mt-1 text-2xl font-bold text-red-700">${{ fmt(resumen?.costos) }}</p>
         <p class="text-xs text-red-500 mt-1">Entradas de inventario</p>
       </div>
-      <div class="rounded-2xl border border-coffee-200 bg-linear-to-br from-white to-coffee-50 p-4 shadow-md">
-        <p class="text-xs font-semibold uppercase text-coffee-600">Utilidad estimada</p>
+      <div class="rounded-2xl border border-slate-200 bg-linear-to-br from-white to-slate-50 p-4 shadow-md">
+        <p class="text-xs font-semibold uppercase text-slate-600">Utilidad estimada</p>
         <p class="mt-1 text-2xl font-bold"
-           [class]="(resumen?.utilidad || 0) >= 0 ? 'text-green-700' : 'text-red-700'">
+           [class]="(resumen?.utilidad || 0) >= 0 ? 'text-sky-700' : 'text-red-700'">
           ${{ fmt(resumen?.utilidad) }}
         </p>
-        <p class="text-xs text-coffee-500 mt-1">Ventas − Costos</p>
+        <p class="text-xs text-slate-500 mt-1">Ventas − Costos</p>
       </div>
       <div class="rounded-2xl border border-amber-200 bg-linear-to-br from-white to-amber-50 p-4 shadow-md">
         <p class="text-xs font-semibold uppercase text-amber-600">Bajo stock</p>
@@ -37,14 +37,14 @@
 
     <!-- Gráficas -->
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
-      <div class="rounded-2xl border border-coffee-300 bg-white p-5 shadow-lg">
-        <h3 class="mb-1 text-sm font-semibold text-coffee-800">📦 Entradas vs Salidas</h3>
-        <p class="mb-4 text-xs text-coffee-500">Unidades movidas por mes (últimos 6 meses)</p>
+      <div class="rounded-2xl border border-slate-300 bg-white p-5 shadow-lg">
+        <h3 class="mb-1 text-sm font-semibold text-slate-800">📦 Entradas vs Salidas</h3>
+        <p class="mb-4 text-xs text-slate-500">Unidades movidas por mes (últimos 6 meses)</p>
         <canvas id="chartMovimientos" height="200"></canvas>
       </div>
-      <div class="rounded-2xl border border-coffee-300 bg-white p-5 shadow-lg">
-        <h3 class="mb-1 text-sm font-semibold text-coffee-800">💰 Facturación por mes</h3>
-        <p class="mb-4 text-xs text-coffee-500">Pagadas vs pendientes (últimos 6 meses)</p>
+      <div class="rounded-2xl border border-slate-300 bg-white p-5 shadow-lg">
+        <h3 class="mb-1 text-sm font-semibold text-slate-800">💰 Facturación por mes</h3>
+        <p class="mb-4 text-xs text-slate-500">Pagadas vs pendientes (últimos 6 meses)</p>
         <canvas id="chartFacturas" height="200"></canvas>
       </div>
     </div>

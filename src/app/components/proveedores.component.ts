@@ -3,6 +3,7 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProveedoresService } from '../services/proveedores.service';
 import { Proveedor } from '../models/proveedor.model';
+import { ModalService } from '../services/modal.service';
 
 @Component({
   selector: 'app-proveedores',
@@ -22,6 +23,7 @@ export class ProveedoresComponent implements OnInit {
 
   constructor(
     private proveedoresService: ProveedoresService,
+    private modalService: ModalService,
     @Inject(PLATFORM_ID) private platformId: Object,
     private cdr: ChangeDetectorRef
   ) {}
@@ -110,8 +112,14 @@ export class ProveedoresComponent implements OnInit {
     });
   }
 
-  eliminarProveedor(id: number): void {
-    if (!confirm('¿Eliminar este proveedor? Esta acción no se puede deshacer.')) return;
+  async eliminarProveedor(id: number): Promise<void> {
+    const confirmar = await this.modalService.confirm(
+      '¿Eliminar este proveedor? Esta accion no se puede deshacer.',
+      'Confirmar eliminacion',
+      'Eliminar',
+      'Cancelar'
+    );
+    if (!confirmar) return;
     this.proveedoresService.eliminarProveedor(id).subscribe({
       next: () => {
         this.proveedores = this.proveedores.filter(p => p.id !== id);
@@ -120,7 +128,7 @@ export class ProveedoresComponent implements OnInit {
       },
       error: (err) => {
         const msg = err?.error?.error || 'Error al eliminar el proveedor.';
-        alert(msg);
+        this.modalService.alert(msg, 'Error', 'error');
         console.error('❌ Error:', err);
         this.cdr.markForCheck();
       }

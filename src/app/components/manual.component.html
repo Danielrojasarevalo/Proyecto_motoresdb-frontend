@@ -1,0 +1,380 @@
+<!-- Botón de descarga (no se imprime) -->
+<div class="no-print flex justify-end mb-4">
+  <button
+    (click)="descargarPDF()"
+    class="flex items-center gap-2 rounded-xl bg-sky-600 px-5 py-3 text-sm font-semibold text-white shadow-lg hover:bg-sky-700 transition-all duration-200 hover:scale-105 hover:shadow-xl"
+  >
+    📥 Descargar Manual (PDF)
+  </button>
+</div>
+
+<!-- Contenido del manual -->
+<div id="manual-pdf" class="mx-auto max-w-4xl rounded-2xl border border-slate-300 bg-white shadow-xl print:shadow-none print:border-none print:rounded-none">
+
+  <!-- Portada -->
+  <div class="bg-gradient-to-br from-sky-700 to-sky-900 text-white rounded-t-2xl print:rounded-none px-10 py-14 text-center">
+    <div class="flex justify-center mb-4">
+      <img src="VillaMarLogo.png" alt="VillaMar Logo" class="h-20 w-20 rounded-2xl shadow-lg object-contain" />
+    </div>
+    <h1 class="text-4xl font-bold tracking-wide text-sky-300 drop-shadow-lg">VillaMar Inventarios</h1>
+    <p class="mt-2 text-lg text-sky-300">Sistema de Inventario para Tienda VillaMar</p>
+    <div class="mt-6 inline-block rounded-xl border border-white/30 bg-black/50 px-6 py-2 text-sm">
+      📘 Manual de Usuario — Versión 1.0 · Marzo 2026
+    </div>
+  </div>
+
+  <div class="px-8 py-10 space-y-12">
+
+    <!-- Introducción -->
+    <section>
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-100 text-sky-700 font-bold text-lg">1</span>
+        <h2 class="text-2xl font-bold text-sky-800">Introducción</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed">
+        <strong>VillaMar Inventarios</strong> es un sistema web diseñado para gestionar el inventario de productos de tienda, bebidas y snacks en VillaMar. Permite registrar productos, controlar el stock, facturar ventas, administrar proveedores y clientes, y generar reportes precisos.
+      </p>
+      <div class="mt-4 rounded-xl border border-sky-200 bg-sky-50 p-5 grid grid-cols-2 gap-3 sm:grid-cols-4 text-center text-sm">
+        <div class="rounded-lg bg-white border border-sky-100 p-3 shadow-sm">
+          <p class="text-2xl">📦</p><p class="font-semibold text-sky-700 mt-1">Productos</p>
+        </div>
+        <div class="rounded-lg bg-white border border-sky-100 p-3 shadow-sm">
+          <p class="text-2xl">📥</p><p class="font-semibold text-sky-700 mt-1">Stock</p>
+        </div>
+        <div class="rounded-lg bg-white border border-sky-100 p-3 shadow-sm">
+          <p class="text-2xl">🧾</p><p class="font-semibold text-sky-700 mt-1">Facturación</p>
+        </div>
+        <div class="rounded-lg bg-white border border-sky-100 p-3 shadow-sm">
+          <p class="text-2xl">📈</p><p class="font-semibold text-sky-700 mt-1">Reportes</p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="border-gray-200" />
+
+    <!-- Navegación -->
+    <section>
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-100 text-sky-700 font-bold text-lg">2</span>
+        <h2 class="text-2xl font-bold text-sky-800">Navegación del Sistema</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        La interfaz está dividida en tres zonas principales: la <strong>barra superior</strong>, el <strong>menú lateral izquierdo</strong> y el <strong>área de contenido principal</strong>.
+      </p>
+      <!-- Diagrama visual del layout -->
+      <div class="rounded-xl border border-gray-200 overflow-hidden text-sm shadow-sm">
+        <div class="bg-sky-600 text-white px-4 py-2 font-semibold text-center">🔝 Barra Superior: Logo · Botón Ayuda · + Movimiento</div>
+        <div class="flex">
+          <div class="w-1/4 bg-gray-50 border-r border-gray-200 p-3 text-center text-gray-600 space-y-1">
+            <p class="font-semibold text-gray-700 text-xs uppercase tracking-wider mb-2">Menú Lateral</p>
+            <p>📊 Información</p>
+            <p>📦 Productos</p>
+            <p>📥 Stock</p>
+            <p>🧾 Facturación</p>
+            <p>📈 Reportes</p>
+            <p>🏢 Proveedores</p>
+            <p>📂 Categorías</p>
+            <p>👥 Clientes</p>
+            <p>📘 Manual</p>
+          </div>
+          <div class="flex-1 bg-white p-4 text-center text-gray-500">
+            <p class="text-4xl mb-2">📋</p>
+            <p class="font-semibold text-gray-700">Área de Contenido Principal</p>
+            <p class="text-xs mt-1">Aquí se muestran los datos de la sección seleccionada</p>
+          </div>
+        </div>
+        <div class="bg-sky-700 text-white px-4 py-2 text-center text-xs">© 2026 Sistema VillaMar Inventarios</div>
+      </div>
+    </section>
+
+    <hr class="border-gray-200" />
+
+    <!-- Dashboard -->
+    <section>
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-100 text-sky-700 font-bold text-lg">3</span>
+        <h2 class="text-2xl font-bold text-sky-800">📊 Dashboard — Información General</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">Al ingresar al sistema, el panel de <strong>Información</strong> muestra 4 indicadores clave del inventario:</p>
+      <div class="grid grid-cols-2 gap-3 sm:grid-cols-4 mb-4">
+        <div class="rounded-xl border border-gray-200 bg-gray-50 p-4 text-center shadow-sm">
+          <p class="text-xs uppercase text-gray-500 tracking-wider">Stock Total</p>
+          <p class="text-2xl font-bold text-gray-800 mt-1">1,240</p>
+          <p class="text-xs text-gray-400">unidades</p>
+        </div>
+        <div class="rounded-xl border border-red-100 bg-red-50 p-4 text-center shadow-sm">
+          <p class="text-xs uppercase text-red-500 tracking-wider">Bajo Stock</p>
+          <p class="text-2xl font-bold text-red-600 mt-1">3</p>
+          <p class="text-xs text-red-400">productos críticos</p>
+        </div>
+        <div class="rounded-xl border border-sky-100 bg-sky-50 p-4 text-center shadow-sm">
+          <p class="text-xs uppercase text-sky-600 tracking-wider">Entradas</p>
+          <p class="text-2xl font-bold text-sky-700 mt-1">+58</p>
+          <p class="text-xs text-sky-500">últimos 7 días</p>
+        </div>
+        <div class="rounded-xl border border-blue-100 bg-blue-50 p-4 text-center shadow-sm">
+          <p class="text-xs uppercase text-blue-500 tracking-wider">Ventas</p>
+          <p class="text-2xl font-bold text-blue-700 mt-1">$2.4M</p>
+          <p class="text-xs text-blue-400">mes actual</p>
+        </div>
+      </div>
+      <div class="rounded-xl bg-yellow-50 border border-yellow-200 p-4 text-sm text-yellow-800">
+        <strong>⚠ Atención:</strong> Los productos con <span class="text-red-600 font-semibold">Bajo Stock</span> se resaltan en rojo. Revisar periódicamente para evitar desabastecimiento.
+      </div>
+    </section>
+
+    <hr class="border-gray-200" />
+
+    <!-- Productos -->
+    <section>
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-100 text-sky-700 font-bold text-lg">4</span>
+        <h2 class="text-2xl font-bold text-sky-800">📦 Gestión de Productos</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">En la sección <strong>Productos</strong> se pueden registrar, editar y eliminar los productos del catálogo de tienda.</p>
+      <div class="space-y-3">
+        <div class="flex gap-3 items-start rounded-xl border border-gray-100 bg-gray-50 p-4">
+          <span class="text-2xl">➕</span>
+          <div>
+            <p class="font-semibold text-gray-800">Crear producto</p>
+            <p class="text-sm text-gray-600">Haga clic en <strong>"+ Nuevo Producto"</strong>. Complete: nombre, descripción, categoría, unidad de medida, precio y stock mínimo.</p>
+          </div>
+        </div>
+        <div class="flex gap-3 items-start rounded-xl border border-gray-100 bg-gray-50 p-4">
+          <span class="text-2xl">✏️</span>
+          <div>
+            <p class="font-semibold text-gray-800">Editar producto</p>
+            <p class="text-sm text-gray-600">Haga clic en el ícono de <strong>lápiz</strong> junto al producto. Modifique los campos y guarde.</p>
+          </div>
+        </div>
+        <div class="flex gap-3 items-start rounded-xl border border-red-50 bg-red-50 p-4">
+          <span class="text-2xl">🗑️</span>
+          <div>
+            <p class="font-semibold text-red-700">Eliminar producto</p>
+            <p class="text-sm text-red-600">Haga clic en el ícono de <strong>papelera</strong>. Se solicitará confirmación antes de eliminar.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="border-gray-200" />
+
+    <!-- Stock -->
+    <section>
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-100 text-sky-700 font-bold text-lg">5</span>
+        <h2 class="text-2xl font-bold text-sky-800">📥 Control de Stock (Movimientos)</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">Esta sección registra <strong>entradas</strong> y <strong>salidas</strong> de productos del inventario. También se accede desde el botón <strong>"+ Movimiento"</strong> en la barra superior.</p>
+      <div class="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
+        <table class="w-full text-sm">
+          <thead class="bg-sky-600 text-white">
+            <tr>
+              <th class="px-4 py-3 text-left">Tipo</th>
+              <th class="px-4 py-3 text-left">Descripción</th>
+              <th class="px-4 py-3 text-left">Efecto en Stock</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100">
+            <tr class="bg-sky-50">
+              <td class="px-4 py-3 font-semibold text-sky-700">📥 Entrada</td>
+              <td class="px-4 py-3 text-gray-600">Recepción de mercancía de un proveedor</td>
+              <td class="px-4 py-3 text-sky-700 font-semibold">+ Aumenta</td>
+            </tr>
+            <tr class="bg-red-50">
+              <td class="px-4 py-3 font-semibold text-red-600">📤 Salida</td>
+              <td class="px-4 py-3 text-gray-600">Uso o despacho de producto</td>
+              <td class="px-4 py-3 text-red-600 font-semibold">− Disminuye</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <hr class="border-gray-200" />
+
+    <!-- Facturación -->
+    <section>
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-100 text-sky-700 font-bold text-lg">6</span>
+        <h2 class="text-2xl font-bold text-sky-800">🧾 Facturación</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">Permite generar facturas de venta asociadas a clientes. Cada factura puede incluir múltiples productos.</p>
+      <ol class="space-y-2 text-sm text-gray-700 list-decimal list-inside">
+        <li>Seleccione el <strong>cliente</strong> de la lista desplegable.</li>
+        <li>Haga clic en <strong>"+ Agregar Producto"</strong> para añadir ítems.</li>
+        <li>Especifique la <strong>cantidad</strong> de cada producto.</li>
+        <li>Revise el <strong>subtotal y total</strong> calculado automáticamente.</li>
+        <li>Presione <strong>"Guardar Factura"</strong> para registrar la venta.</li>
+      </ol>
+      <div class="mt-4 rounded-xl bg-blue-50 border border-blue-200 p-4 text-sm text-blue-800">
+        <strong>💡 Nota:</strong> Al guardar una factura, el stock de los productos facturados se descuenta automáticamente.
+      </div>
+    </section>
+
+    <hr class="border-gray-200" />
+
+    <!-- Proveedores y Clientes -->
+    <section>
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-100 text-sky-700 font-bold text-lg">7</span>
+        <h2 class="text-2xl font-bold text-sky-800">🏢 Proveedores &amp; 👥 Clientes</h2>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div class="rounded-xl border border-gray-200 bg-gray-50 p-5 shadow-sm">
+          <h3 class="font-bold text-gray-800 mb-2 flex items-center gap-2">🏢 Proveedores</h3>
+          <p class="text-sm text-gray-600">Registre sus proveedores de abonos: nombre, NIT, teléfono, correo y dirección. Los proveedores se vinculan a los movimientos de entrada de stock.</p>
+        </div>
+        <div class="rounded-xl border border-gray-200 bg-gray-50 p-5 shadow-sm">
+          <h3 class="font-bold text-gray-800 mb-2 flex items-center gap-2">👥 Clientes</h3>
+          <p class="text-sm text-gray-600">Registre sus clientes: nombre, cédula o NIT, teléfono y correo. Los clientes se asignan a las facturas de venta generadas.</p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="border-gray-200" />
+
+    <!-- Categorías -->
+    <section>
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-100 text-sky-700 font-bold text-lg">8</span>
+        <h2 class="text-2xl font-bold text-sky-800">📂 Categorías</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed">
+        Organice sus productos en categorías (p. ej.: <em>Nitrogenados</em>, <em>Fosfatados</em>, <em>Potásicos</em>, <em>Orgánicos</em>). Las categorías facilitan los filtros y reportes del sistema.
+      </p>
+    </section>
+
+    <hr class="border-gray-200" />
+
+    <!-- Reportes -->
+    <section>
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-100 text-sky-700 font-bold text-lg">9</span>
+        <h2 class="text-2xl font-bold text-sky-800">📈 Reportes</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">La sección de reportes presenta gráficas y estadísticas para la toma de decisiones:</p>
+      <ul class="space-y-2 text-sm text-gray-700">
+        <li class="flex gap-2 items-start"><span class="text-sky-600 font-bold">▶</span> <span><strong>Productos más vendidos</strong>: ranking por unidades despachadas.</span></li>
+        <li class="flex gap-2 items-start"><span class="text-sky-600 font-bold">▶</span> <span><strong>Historial de entradas y salidas</strong>: movimientos en el período seleccionado.</span></li>
+        <li class="flex gap-2 items-start"><span class="text-sky-600 font-bold">▶</span> <span><strong>Ventas mensuales</strong>: facturación agrupada por mes.</span></li>
+        <li class="flex gap-2 items-start"><span class="text-sky-600 font-bold">▶</span> <span><strong>Alerta de stock mínimo</strong>: productos que necesitan reabastecimiento.</span></li>
+      </ul>
+    </section>
+
+    <hr class="border-gray-200" />
+
+    <!-- Descargar como App Móvil -->
+    <section>
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-100 text-sky-700 font-bold text-lg">10</span>
+        <h2 class="text-2xl font-bold text-sky-800">📱 Descargar como Aplicación Móvil (PWA)</h2>
+      </div>
+      <p class="text-gray-700 leading-relaxed mb-4">
+        VillaMar Inventarios es una <strong>Aplicación Web Progresiva (PWA)</strong> que funciona en celulares como una app nativa. Puedes descargarla sin pasar por tiendas de apps. Sigue los pasos según tu dispositivo:
+      </p>
+
+      <!-- iPhone / iOS -->
+      <div class="rounded-xl border border-orange-200 bg-orange-50 p-6 mb-4">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="text-2xl">🍎</span>
+          <h3 class="text-xl font-bold text-gray-800">iPhone / iPad (iOS)</h3>
+        </div>
+        <ol class="space-y-3 text-sm text-gray-700 ml-4 list-decimal">
+          <li>Abre <strong>Safari</strong> y accede a VillaMar Inventarios.</li>
+          <li>Toca el botón de <strong>Compartir</strong> (cuadro con flecha hacia arriba) en la barra inferior.</li>
+          <li>Desplázate y selecciona <strong>"Agregar a pantalla de inicio"</strong>.</li>
+          <li>Elige un nombre para la app (por defecto aparece "VillaMar").</li>
+          <li>Toca <strong>"Agregar"</strong> en la esquina superior derecha.</li>
+          <li>¡Listo! La app aparecerá en tu pantalla de inicio con el logo de VillaMar.</li>
+        </ol>
+        <div class="mt-4 rounded-lg bg-white border border-orange-200 p-4 text-xs">
+          <p class="font-semibold text-orange-700 mb-1">💡 Consejo:</p>
+          <p>Si usas <strong>Chrome</strong> en iOS, sigue el mismo proceso: Compartir → Agregar a pantalla de inicio.</p>
+        </div>
+      </div>
+
+      <!-- Android -->
+      <div class="rounded-xl border border-green-200 bg-green-50 p-6 mb-4">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="text-2xl">🤖</span>
+          <h3 class="text-xl font-bold text-gray-800">Android</h3>
+        </div>
+        <p class="text-sm text-gray-700 mb-3"><strong>Opción A: Chrome (Recomendado)</strong></p>
+        <ol class="space-y-3 text-sm text-gray-700 ml-4 list-decimal mb-4">
+          <li>Abre <strong>Chrome</strong> y accede a VillaMar Inventarios.</li>
+          <li>Toca el menú de tres puntos <strong>⋮</strong> en la esquina superior derecha.</li>
+          <li>Selecciona <strong>"Instalar aplicación"</strong> o <strong>"Agregar a pantalla de inicio"</strong>.</li>
+          <li>Confirma que deseas instalar la app.</li>
+          <li>¡Listo! La app se descargará e instalará automáticamente.</li>
+        </ol>
+        <p class="text-sm text-gray-700 mb-3"><strong>Opción B: Firefox</strong></p>
+        <ol class="space-y-3 text-sm text-gray-700 ml-4 list-decimal">
+          <li>Abre <strong>Firefox</strong> y accede a VillaMar Inventarios.</li>
+          <li>Toca el menú de tres líneas <strong>≡</strong> en la esquina inferior derecha.</li>
+          <li>Selecciona <strong>"Instalar"</strong>.</li>
+          <li>Confirma la instalación.</li>
+        </ol>
+        <div class="mt-4 rounded-lg bg-white border border-green-200 p-4 text-xs">
+          <p class="font-semibold text-green-700 mb-1">💡 Consejo:</p>
+          <p><strong>Chrome</strong> es la opción más recomendada para una mejor experiencia. La app se instalará en tu gaveta de aplicaciones como cualquier otra app descargada.</p>
+        </div>
+      </div>
+
+      <!-- Beneficios de la PWA -->
+      <div class="rounded-xl border border-purple-200 bg-purple-50 p-6">
+        <div class="flex items-center gap-2 mb-3">
+          <span class="text-2xl">⚡</span>
+          <h3 class="text-lg font-bold text-gray-800">Ventajas de usar la app móvil</h3>
+        </div>
+        <ul class="space-y-2 text-sm text-gray-700">
+          <li class="flex gap-2 items-start"><span class="text-purple-600 font-bold">✓</span> <span>Acceso rápido desde la pantalla de inicio</span></li>
+          <li class="flex gap-2 items-start"><span class="text-purple-600 font-bold">✓</span> <span>Funciona sin conexión a internet (caché automático)</span></li>
+          <li class="flex gap-2 items-start"><span class="text-purple-600 font-bold">✓</span> <span>Mejor rendimiento que en el navegador</span></li>
+          <li class="flex gap-2 items-start"><span class="text-purple-600 font-bold">✓</span> <span>No ocupa espacio en el almacenamiento del teléfono (como las apps normales)</span></li>
+          <li class="flex gap-2 items-start"><span class="text-purple-600 font-bold">✓</span> <span>Se actualiza automáticamente</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <hr class="border-gray-200" />
+
+    <!-- Preguntas frecuentes -->
+    <section>
+      <div class="flex items-center gap-3 mb-4">
+        <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-100 text-sky-700 font-bold text-lg">11</span>
+        <h2 class="text-2xl font-bold text-sky-800">❓ Preguntas Frecuentes</h2>
+      </div>
+      <div class="space-y-3">
+        <details class="rounded-xl border border-gray-200 bg-gray-50 px-5 py-4 cursor-pointer">
+          <summary class="font-semibold text-gray-800">¿Cómo registro una entrada de mercancía?</summary>
+          <p class="mt-2 text-sm text-gray-600">Vaya a <strong>Stock</strong> → haga clic en <strong>"+ Movimiento"</strong> → seleccione tipo <strong>Entrada</strong> → elija el producto y cantidad → guarde.</p>
+        </details>
+        <details class="rounded-xl border border-gray-200 bg-gray-50 px-5 py-4 cursor-pointer">
+          <summary class="font-semibold text-gray-800">¿Qué pasa si un producto llega a stock cero?</summary>
+          <p class="mt-2 text-sm text-gray-600">El sistema lo marcará en <strong>rojo</strong> en el Dashboard como producto crítico. No se podrá crear una factura con ese producto hasta que se registre una entrada.</p>
+        </details>
+        <details class="rounded-xl border border-gray-200 bg-gray-50 px-5 py-4 cursor-pointer">
+          <summary class="font-semibold text-gray-800">¿Puedo eliminar una factura ya creada?</summary>
+          <p class="mt-2 text-sm text-gray-600">No. Las facturas son documentos permanentes. Para corregir un error registre un movimiento de entrada que compense la salida.</p>
+        </details>
+        <details class="rounded-xl border border-gray-200 bg-gray-50 px-5 py-4 cursor-pointer">
+          <summary class="font-semibold text-gray-800">¿Cómo descargo este manual en PDF?</summary>
+          <p class="mt-2 text-sm text-gray-600">Haga clic en el botón azul <strong>"📥 Descargar Manual (PDF)"</strong> al inicio de esta página. Se abrirá el diálogo de impresión del navegador; seleccione <strong>"Guardar como PDF"</strong> como destino.</p>
+        </details>
+        <details class="rounded-xl border border-gray-200 bg-gray-50 px-5 py-4 cursor-pointer">
+          <summary class="font-semibold text-gray-800">¿Cómo instalo la app en mi celular?</summary>
+          <p class="mt-2 text-sm text-gray-600">Ve a la sección <strong>"📱 Descargar como Aplicación Móvil (PWA)"</strong> en este manual. Ahí encontrarás pasos detallados para <strong>iPhone</strong> (usando Safari) y <strong>Android</strong> (usando Chrome o Firefox).</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- Pie del manual -->
+    <div class="rounded-2xl bg-sky-700 text-white text-center px-8 py-6">
+      <p class="text-lg font-semibold">VillaMar Inventarios</p>
+      <p class="text-sm text-sky-200 mt-1">Sistema de Inventario para Tienda VillaMar</p>
+      <p class="text-xs text-sky-200 mt-3">© 2026 VillaMar · Manual v1.0</p>
+    </div>
+
+  </div>
+</div>

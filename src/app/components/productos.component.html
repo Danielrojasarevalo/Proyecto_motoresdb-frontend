@@ -1,68 +1,68 @@
-<div class="rounded-2xl border border-coffee-300 bg-linear-to-br from-white to-coffee-50 p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300">
+<div class="rounded-2xl border border-slate-300 bg-linear-to-br from-white to-slate-50 p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300">
   <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
     <div>
       <h2 class="text-lg font-semibold">Productos</h2>
-      <p class="text-sm text-coffee-600">Catálogo de abonos y fertilizantes para cafetales</p>
+      <p class="text-sm text-slate-600">Catálogo de productos para tienda y abarrotes</p>
     </div>
     <div class="flex gap-2">
       <input 
         [(ngModel)]="searchTerm" 
         (ngModelChange)="filtrarProductos()"
-        class="w-full sm:w-48 rounded-lg border border-coffee-300 px-3 py-2 text-sm focus:border-coffee-500 focus:ring-2 focus:ring-coffee-300 transition-all duration-200" 
+        class="w-full sm:w-48 rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-sky-500 focus:ring-2 focus:ring-sky-300 transition-all duration-200" 
         placeholder="Buscar producto" 
       />
       <button 
         type="button"
         (click)="abrirFormulario()"
-        class="rounded-lg bg-coffee-600 px-4 py-2 text-sm font-semibold text-white hover:bg-coffee-700 transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-xl whitespace-nowrap">
+        class="rounded-lg bg-sky-600 px-4 py-2 text-sm font-semibold text-white hover:bg-sky-700 transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-xl whitespace-nowrap">
         + Agregar
       </button>
     </div>
   </div>
 
   <!-- Formulario de agregar/editar -->
-  <div [hidden]="!mostrarFormulario" class="mb-6 rounded-xl border-2 border-coffee-400 bg-white p-4 sm:p-6 shadow-md animate-fadeIn">
+  <div [hidden]="!mostrarFormulario" class="mb-6 rounded-xl border-2 border-slate-400 bg-white p-4 sm:p-6 shadow-md animate-fadeIn">
       <div class="flex items-center justify-between mb-4">
         <h3 class="text-lg font-semibold">{{ productoEditando ? 'Editar producto' : 'Nuevo producto' }}</h3>
         <button 
           type="button"
           (click)="cerrarFormulario()"
-          class="text-coffee-600 hover:text-coffee-800 font-bold text-xl">
+          class="text-slate-600 hover:text-slate-800 font-bold text-xl">
           ×
         </button>
       </div>
       
       <form (ngSubmit)="guardarProducto()" class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label class="text-xs font-semibold text-coffee-700">Nombre del producto *</label>
+          <label class="text-xs font-semibold text-slate-700">Nombre del producto *</label>
           <input 
             [(ngModel)]="formulario.nombre" 
             name="nombre"
             type="text" 
             required
-            class="mt-1 w-full rounded-lg border border-coffee-300 px-3 py-2 text-sm focus:border-coffee-500 focus:ring-2 focus:ring-coffee-300 transition-all duration-200" 
-            placeholder="Ej: Abono Orgánico Compost" 
+            class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-sky-500 focus:ring-2 focus:ring-sky-300 transition-all duration-200" 
+            placeholder="Ej: Cerveza, Gaseosa o Papas Fritas" 
           />
         </div>
 
         <div>
-          <label class="text-xs font-semibold text-coffee-700">Código (opcional)</label>
+          <label class="text-xs font-semibold text-slate-700">Código (opcional)</label>
           <input 
             [(ngModel)]="formulario.codigo_producto" 
             name="codigo"
             type="text" 
-            class="mt-1 w-full rounded-lg border border-coffee-300 px-3 py-2 text-sm focus:border-coffee-500 focus:ring-2 focus:ring-coffee-300 transition-all duration-200" 
+            class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-sky-500 focus:ring-2 focus:ring-sky-300 transition-all duration-200" 
             placeholder="Ej: ABN-001" 
           />
         </div>
 
         <div>
-          <label class="text-xs font-semibold text-coffee-700">Categoría *</label>
+          <label class="text-xs font-semibold text-slate-700">Categoría *</label>
           <select 
             [(ngModel)]="formulario.categoria" 
             name="categoria"
             required
-            class="mt-1 w-full rounded-lg border border-coffee-300 px-3 py-2 text-sm focus:border-coffee-500 focus:ring-2 focus:ring-coffee-300 transition-all duration-200">
+            class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-sky-500 focus:ring-2 focus:ring-sky-300 transition-all duration-200">
             <option value="0">Selecciona una categoría</option>
             @for (cat of categorias; track cat.id) {
               <option [value]="cat.id">{{ cat.nombre }}</option>
@@ -71,12 +71,12 @@
         </div>
 
         <div>
-          <label class="text-xs font-semibold text-coffee-700">Proveedor *</label>
+          <label class="text-xs font-semibold text-slate-700">Proveedor *</label>
           <select 
             [(ngModel)]="formulario.proveedor" 
             name="proveedor"
             required
-            class="mt-1 w-full rounded-lg border border-coffee-300 px-3 py-2 text-sm focus:border-coffee-500 focus:ring-2 focus:ring-coffee-300 transition-all duration-200">
+            class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-sky-500 focus:ring-2 focus:ring-sky-300 transition-all duration-200">
             <option value="0">Selecciona un proveedor</option>
             @for (prov of proveedores; track prov.id) {
               <option [value]="prov.id">{{ prov.nombre }}</option>
@@ -85,51 +85,51 @@
         </div>
 
         <div>
-          <label class="text-xs font-semibold text-coffee-700">Stock actual *</label>
+          <label class="text-xs font-semibold text-slate-700">Stock actual *</label>
           <input 
             [(ngModel)]="formulario.stock_actual" 
             name="stock_actual"
             type="number" 
             min="0"
             required
-            class="mt-1 w-full rounded-lg border border-coffee-300 px-3 py-2 text-sm focus:border-coffee-500 focus:ring-2 focus:ring-coffee-300 transition-all duration-200" 
+            class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-sky-500 focus:ring-2 focus:ring-sky-300 transition-all duration-200" 
             placeholder="0" 
           />
         </div>
 
         <div>
-          <label class="text-xs font-semibold text-coffee-700">Stock mínimo *</label>
+          <label class="text-xs font-semibold text-slate-700">Stock mínimo *</label>
           <input 
             [(ngModel)]="formulario.stock_minimo" 
             name="stock_minimo"
             type="number" 
             min="0"
             required
-            class="mt-1 w-full rounded-lg border border-coffee-300 px-3 py-2 text-sm focus:border-coffee-500 focus:ring-2 focus:ring-coffee-300 transition-all duration-200" 
+            class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-sky-500 focus:ring-2 focus:ring-sky-300 transition-all duration-200" 
             placeholder="0" 
           />
         </div>
 
         <div>
-          <label class="text-xs font-semibold text-coffee-700">Stock máximo *</label>
+          <label class="text-xs font-semibold text-slate-700">Stock máximo *</label>
           <input 
             [(ngModel)]="formulario.stock_maximo" 
             name="stock_maximo"
             type="number" 
             min="0"
             required
-            class="mt-1 w-full rounded-lg border border-coffee-300 px-3 py-2 text-sm focus:border-coffee-500 focus:ring-2 focus:ring-coffee-300 transition-all duration-200" 
+            class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-sky-500 focus:ring-2 focus:ring-sky-300 transition-all duration-200" 
             placeholder="0" 
           />
         </div>
 
         <div>
-          <label class="text-xs font-semibold text-coffee-700">Unidad de medida *</label>
+          <label class="text-xs font-semibold text-slate-700">Unidad de medida *</label>
           <select 
             [(ngModel)]="formulario.unidad_medida" 
             name="unidad"
             required
-            class="mt-1 w-full rounded-lg border border-coffee-300 px-3 py-2 text-sm focus:border-coffee-500 focus:ring-2 focus:ring-coffee-300 transition-all duration-200">
+            class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-sky-500 focus:ring-2 focus:ring-sky-300 transition-all duration-200">
             <option value="kg">Kilogramos (kg)</option>
             <option value="lb">Libras (lb)</option>
             <option value="ton">Toneladas (ton)</option>
@@ -142,7 +142,7 @@
         </div>
 
         <div>
-          <label class="text-xs font-semibold text-coffee-700">Precio de compra (costo) *</label>
+          <label class="text-xs font-semibold text-slate-700">Precio de compra (costo) *</label>
           <input 
             [(ngModel)]="formulario.precio_unitario" 
             name="precio"
@@ -150,13 +150,13 @@
             min="0"
             step="0.01"
             required
-            class="mt-1 w-full rounded-lg border border-coffee-300 px-3 py-2 text-sm focus:border-coffee-500 focus:ring-2 focus:ring-coffee-300 transition-all duration-200" 
+            class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-sky-500 focus:ring-2 focus:ring-sky-300 transition-all duration-200" 
             placeholder="0.00" 
           />
         </div>
 
         <div>
-          <label class="text-xs font-semibold text-coffee-700">Precio de venta *</label>
+          <label class="text-xs font-semibold text-slate-700">Precio de venta *</label>
           <input 
             [(ngModel)]="formulario.precio_venta" 
             name="precio_venta"
@@ -164,18 +164,18 @@
             min="0"
             step="0.01"
             required
-            class="mt-1 w-full rounded-lg border border-coffee-300 px-3 py-2 text-sm focus:border-coffee-500 focus:ring-2 focus:ring-coffee-300 transition-all duration-200" 
+            class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-sky-500 focus:ring-2 focus:ring-sky-300 transition-all duration-200" 
             placeholder="0.00" 
           />
         </div>
 
         <div class="md:col-span-2">
-          <label class="text-xs font-semibold text-coffee-700">Descripción (opcional)</label>
+          <label class="text-xs font-semibold text-slate-700">Descripción (opcional)</label>
           <textarea 
             [(ngModel)]="formulario.descripcion" 
             name="descripcion"
             rows="3"
-            class="mt-1 w-full rounded-lg border border-coffee-300 px-3 py-2 text-sm focus:border-coffee-500 focus:ring-2 focus:ring-coffee-300 transition-all duration-200" 
+            class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-sky-500 focus:ring-2 focus:ring-sky-300 transition-all duration-200" 
             placeholder="Describe las características del producto...">
           </textarea>
         </div>
@@ -184,13 +184,13 @@
           <button 
             type="button"
             (click)="cerrarFormulario()"
-            class="px-4 py-2 text-sm font-semibold text-coffee-700 hover:bg-coffee-100 rounded-lg transition-all duration-200">
+            class="px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100 rounded-lg transition-all duration-200">
             Cancelar
           </button>
           <button 
             type="submit"
             [disabled]="guardando"
-            class="px-4 py-2 text-sm font-semibold text-white bg-coffee-600 hover:bg-coffee-700 rounded-lg transition-all duration-200 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed">
+            class="px-4 py-2 text-sm font-semibold text-white bg-sky-600 hover:bg-sky-700 rounded-lg transition-all duration-200 hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed">
             {{ guardando ? 'Guardando...' : (productoEditando ? 'Actualizar' : 'Guardar') }}
           </button>
         </div>
@@ -200,20 +200,20 @@
   <!-- Tabla de productos -->
   <div class="overflow-x-auto -mx-4 sm:mx-0">
     @if (loading) {
-      <p class="text-center py-8 text-coffee-600">⏳ Cargando productos...</p>
+      <p class="text-center py-8 text-slate-600">⏳ ⏳ Cargando productos...</p>
     } @else if (error) {
       <div class="text-center py-8">
         <p class="text-red-600">❌ {{ error }}</p>
-        <button (click)="cargarProductos()" class="mt-2 text-coffee-600 hover:text-coffee-800">Reintentar</button>
+        <button (click)="cargarProductos()" class="mt-2 text-slate-600 hover:text-slate-800">Reintentar</button>
       </div>
     } @else if (productosFiltrados.length === 0) {
-      <p class="text-center py-8 text-coffee-600">
+      <p class="text-center py-8 text-slate-600">
         {{ searchTerm ? 'No se encontraron productos con ese criterio' : 'No hay productos disponibles' }}
       </p>
     } @else {
       <table class="w-full text-left text-sm min-w-160">
-        <thead class="text-xs uppercase text-coffee-600">
-          <tr class="border-b border-coffee-200">
+        <thead class="text-xs uppercase text-slate-600">
+          <tr class="border-b border-slate-200">
             <th class="py-2 px-2">Producto</th>
             <th class="py-2 px-2 hidden sm:table-cell">Categoría</th>
             <th class="py-2 px-2 hidden md:table-cell">Proveedor</th>
@@ -224,23 +224,23 @@
             <th class="py-2 px-2 text-right">Acciones</th>
           </tr>
         </thead>
-        <tbody class="divide-y divide-coffee-100">
+        <tbody class="divide-y divide-slate-100">
           @for (producto of productosFiltrados; track producto.id) {
-            <tr class="hover:bg-coffee-50 transition-colors duration-150">
+            <tr class="hover:bg-slate-50 transition-colors duration-150">
               <td class="py-3 px-2">
                 <div class="font-medium">{{ producto.nombre }}</div>
                 @if (producto.codigo_producto) {
-                  <div class="text-xs text-coffee-500">{{ producto.codigo_producto }}</div>
+                  <div class="text-xs text-slate-500">{{ producto.codigo_producto }}</div>
                 }
               </td>
               <td class="py-3 px-2 hidden sm:table-cell">{{ producto.categoria_nombre }}</td>
               <td class="py-3 px-2 hidden md:table-cell">{{ producto.proveedor_nombre }}</td>
               <td class="py-3 px-2">
                 <div>{{ producto.stock_actual }} {{ producto.unidad_medida }}</div>
-                <div class="text-xs text-coffee-500">Min: {{ producto.stock_minimo }}</div>
+                <div class="text-xs text-slate-500">Min: {{ producto.stock_minimo }}</div>
               </td>
               <td class="py-3 px-2 hidden lg:table-cell">${{ formatearPrecio(producto.precio_unitario) }}</td>
-              <td class="py-3 px-2 hidden lg:table-cell text-green-700 font-semibold">${{ formatearPrecio(producto.precio_venta || '0') }}</td>
+              <td class="py-3 px-2 hidden lg:table-cell text-sky-700 font-semibold">${{ formatearPrecio(producto.precio_venta || '0') }}</td>
               <td class="py-3 px-2">
                 <span [class]="'rounded-full px-2 py-1 text-xs font-semibold ' + getBadgeClass(producto.estado || 'disponible')">
                   {{ producto.estado_display || producto.estado }}
@@ -249,7 +249,7 @@
               <td class="py-3 px-2 text-right">
                 <button 
                   (click)="editarProducto(producto)"
-                  class="text-coffee-600 hover:text-coffee-800 mr-2 text-sm font-medium">
+                  class="text-slate-600 hover:text-slate-800 mr-2 text-sm font-medium">
                   ✏️ Editar
                 </button>
                 <button 

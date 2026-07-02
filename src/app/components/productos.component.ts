@@ -7,6 +7,7 @@ import { ProveedoresService } from '../services/proveedores.service';
 import { Producto } from '../models/producto.model';
 import { Categoria } from '../models/categoria.model';
 import { Proveedor } from '../models/proveedor.model';
+import { ModalService } from '../services/modal.service';
 
 @Component({
   selector: 'app-productos',
@@ -43,6 +44,7 @@ export class ProductosComponent implements OnInit {
     private productosService: ProductosService,
     private categoriasService: CategoriasService,
     private proveedoresService: ProveedoresService,
+    private modalService: ModalService,
     @Inject(PLATFORM_ID) private platformId: Object,
     private cdr: ChangeDetectorRef
   ) {}
@@ -188,17 +190,17 @@ export class ProductosComponent implements OnInit {
   guardarProducto(): void {
     // Validaciones
     if (!this.formulario.nombre || this.formulario.categoria === 0 || this.formulario.proveedor === 0) {
-      alert('Por favor completa todos los campos obligatorios');
+      this.modalService.alert('Por favor completa todos los campos obligatorios', 'Campos requeridos', 'warning');
       return;
     }
 
     if (this.formulario.stock_actual < 0 || this.formulario.stock_minimo < 0 || this.formulario.stock_maximo < 0) {
-      alert('Los valores de stock no pueden ser negativos');
+      this.modalService.alert('Los valores de stock no pueden ser negativos', 'Validacion', 'warning');
       return;
     }
 
     if (this.formulario.stock_minimo > this.formulario.stock_maximo) {
-      alert('El stock mínimo no puede ser mayor al stock máximo');
+      this.modalService.alert('El stock minimo no puede ser mayor al stock maximo', 'Validacion', 'warning');
       return;
     }
 
@@ -211,7 +213,7 @@ export class ProductosComponent implements OnInit {
     operacion.subscribe({
       next: (data) => {
         console.log('✅ Producto guardado:', data);
-        alert(`Producto ${this.productoEditando ? 'actualizado' : 'creado'} exitosamente`);
+        this.modalService.alert(`Producto ${this.productoEditando ? 'actualizado' : 'creado'} exitosamente`, 'Operacion exitosa', 'success');
         this.cerrarFormulario();
         this.cargarProductos();
         this.guardando = false;
@@ -219,15 +221,21 @@ export class ProductosComponent implements OnInit {
       },
       error: (err) => {
         console.error('❌ Error:', err);
-        alert('Error al guardar el producto. Verifica los datos e intenta nuevamente.');
+        this.modalService.alert('Error al guardar el producto. Verifica los datos e intenta nuevamente.', 'Error', 'error');
         this.guardando = false;
         this.cdr.markForCheck();
       }
     });
   }
 
-  eliminarProducto(producto: Producto): void {
-    if (!confirm(`¿Estás seguro de eliminar el producto "${producto.nombre}"?`)) {
+  async eliminarProducto(producto: Producto): Promise<void> {
+    const confirmar = await this.modalService.confirm(
+      `¿Estas seguro de eliminar el producto "${producto.nombre}"?`,
+      'Confirmar eliminacion',
+      'Eliminar',
+      'Cancelar'
+    );
+    if (!confirmar) {
       return;
     }
 
@@ -251,7 +259,7 @@ export class ProductosComponent implements OnInit {
         } else if (typeof err.error === 'string') {
           mensaje = err.error;
         }
-        alert(mensaje);
+        this.modalService.alert(mensaje, 'Error', 'error');
         this.cdr.markForCheck();
       }
     });

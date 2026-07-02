@@ -7,6 +7,7 @@ import { ProveedoresService } from '../services/proveedores.service';
 import { Movimiento } from '../models/movimiento.model';
 import { Producto } from '../models/producto.model';
 import { Proveedor } from '../models/proveedor.model';
+import { ModalService } from '../services/modal.service';
 
 @Component({
   selector: 'app-stock',
@@ -38,6 +39,7 @@ export class StockComponent implements OnInit {
     private movimientosService: MovimientosService,
     private productosService: ProductosService,
     private proveedoresService: ProveedoresService,
+    private modalService: ModalService,
     @Inject(PLATFORM_ID) private platformId: Object,
     private cdr: ChangeDetectorRef
   ) {}
@@ -108,22 +110,28 @@ export class StockComponent implements OnInit {
     this.productoSeleccionado = this.productos.find(p => p.id === productoId) || null;
   }
 
-  registrarMovimiento(): void {
+  async registrarMovimiento(): Promise<void> {
     // Validaciones
     if (this.nuevoMovimiento.producto === 0) {
-      alert('Por favor selecciona un producto');
+      this.modalService.alert('Por favor selecciona un producto', 'Campos requeridos', 'warning');
       return;
     }
 
     if (this.nuevoMovimiento.cantidad <= 0) {
-      alert('La cantidad debe ser mayor a 0');
+      this.modalService.alert('La cantidad debe ser mayor a 0', 'Validacion', 'warning');
       return;
     }
 
     // Validar si hay stock suficiente para salidas
     if (this.nuevoMovimiento.tipo_movimiento === 'salida' && this.productoSeleccionado) {
       if (this.nuevoMovimiento.cantidad > this.productoSeleccionado.stock_actual) {
-        if (!confirm(`⚠️ La cantidad excede el stock actual (${this.productoSeleccionado.stock_actual}). ¿Deseas continuar?`)) {
+        const confirmar = await this.modalService.confirm(
+          `La cantidad excede el stock actual (${this.productoSeleccionado.stock_actual}). ¿Deseas continuar?`,
+          'Advertencia de stock',
+          'Continuar',
+          'Cancelar'
+        );
+        if (!confirmar) {
           return;
         }
       }
@@ -145,7 +153,7 @@ export class StockComponent implements OnInit {
     this.movimientosService.crearMovimiento(movimiento).subscribe({
       next: (data) => {
         console.log('✅ Movimiento registrado:', data);
-        alert('✅ Movimiento registrado exitosamente');
+        this.modalService.alert('Movimiento registrado exitosamente', 'Operacion exitosa', 'success');
         
         // Recargar datos
         this.cargarMovimientos();
@@ -168,7 +176,7 @@ export class StockComponent implements OnInit {
       },
       error: (err) => {
         console.error('❌ Error:', err);
-        alert('❌ Error al registrar el movimiento. Verifica los datos e intenta nuevamente.');
+        this.modalService.alert('Error al registrar el movimiento. Verifica los datos e intenta nuevamente.', 'Error', 'error');
         this.guardando = false;
         this.cdr.markForCheck();
       }

@@ -7,6 +7,7 @@ import { ProductosService } from '../services/productos.service';
 import { Factura, DetalleFactura } from '../models/factura.model';
 import { Cliente } from '../models/cliente.model';
 import { Producto } from '../models/producto.model';
+import { ModalService } from '../services/modal.service';
 
 @Component({
   selector: 'app-facturacion',
@@ -31,6 +32,7 @@ export class FacturacionComponent implements OnInit {
     private facturasService: FacturasService,
     private clientesService: ClientesService,
     private productosService: ProductosService,
+    private modalService: ModalService,
     @Inject(PLATFORM_ID) private platformId: Object,
     private cdr: ChangeDetectorRef
   ) {}
@@ -209,15 +211,25 @@ export class FacturacionComponent implements OnInit {
     });
   }
 
-  eliminarFactura(id: number): void {
-    if (!confirm('¿Eliminar esta factura?')) return;
+  async eliminarFactura(id: number): Promise<void> {
+    const confirmar = await this.modalService.confirm(
+      '¿Eliminar esta factura?',
+      'Confirmar eliminacion',
+      'Eliminar',
+      'Cancelar'
+    );
+    if (!confirmar) return;
     this.facturasService.eliminarFactura(id).subscribe({
       next: () => {
         this.facturas = this.facturas.filter(f => f.id !== id);
         this.cdr.markForCheck();
         this.cargarFacturas();
       },
-      error: (err) => { alert('Error al eliminar.'); console.error(err); this.cdr.markForCheck(); }
+      error: (err) => {
+        this.modalService.alert('Error al eliminar.', 'Error', 'error');
+        console.error(err);
+        this.cdr.markForCheck();
+      }
     });
   }
 
@@ -267,14 +279,14 @@ export class FacturacionComponent implements OnInit {
       const ancho = doc.internal.pageSize.getWidth();
       let y = margen;
 
-      // === HEADER VERDE ===
-      doc.setFillColor(21, 128, 61);
+      // === HEADER VILLAMAR ===
+      doc.setFillColor(14, 165, 233);
       doc.rect(0, 0, ancho, 32, 'F');
-      doc.setFillColor(34, 197, 94);
+      doc.setFillColor(14, 165, 233);
       doc.rect(0, 32, ancho, 3, 'F');
 
-      // Icono circular con iniciales CV
-      doc.setFillColor(16, 185, 129);
+      // Icono circular con iniciales VM
+      doc.setFillColor(59, 130, 246);
       doc.circle(margen + 11, 16, 11, 'F');
       doc.setDrawColor(255, 255, 255);
       doc.setLineWidth(0.6);
@@ -282,16 +294,16 @@ export class FacturacionComponent implements OnInit {
       doc.setTextColor(255, 255, 255);
       doc.setFontSize(10);
       doc.setFont('helvetica', 'bold');
-      doc.text('CV', margen + 11, 18.5, { align: 'center' });
+      doc.text('VM', margen + 11, 18.5, { align: 'center' });
 
       // Nombre y subtítulo
       doc.setTextColor(255, 255, 255);
       doc.setFontSize(15);
       doc.setFont('helvetica', 'bold');
-      doc.text('Caficultura Verde', margen + 26, 13);
+      doc.text('VillaMar Inventarios', margen + 26, 13);
       doc.setFontSize(8);
       doc.setFont('helvetica', 'normal');
-      doc.text('Sistema de Inventario de Abonos', margen + 26, 21);
+      doc.text('Sistema de Inventario para Tienda VillaMar', margen + 26, 21);
       doc.setFontSize(8.5);
       doc.setFont('helvetica', 'bold');
       doc.text('FACTURA DE VENTA', ancho - margen, 19, { align: 'right' });
@@ -426,15 +438,15 @@ export class FacturacionComponent implements OnInit {
       }
 
       // Pie de página
-      doc.setFillColor(21, 128, 61);
+      doc.setFillColor(14, 165, 233);
       doc.rect(0, 279, ancho, 18, 'F');
-      doc.setFillColor(34, 197, 94);
+      doc.setFillColor(59, 130, 246);
       doc.rect(0, 277, ancho, 2, 'F');
       doc.setTextColor(255, 255, 255);
       doc.setFontSize(7.5);
       doc.setFont('helvetica', 'normal');
       doc.text(
-        'Caficultura Verde  \u2022  Sistema de Inventario de Abonos  \u2022  ' + new Date().toLocaleDateString('es-CO'),
+        'VillaMar Inventarios    Sistema de Inventario para Tienda VillaMar    ' + new Date().toLocaleDateString('es-CO'),
         ancho / 2, 290, { align: 'center' }
       );
 

@@ -3,6 +3,7 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ClientesService } from '../services/clientes.service';
 import { Cliente } from '../models/cliente.model';
+import { ModalService } from '../services/modal.service';
 
 @Component({
   selector: 'app-clientes',
@@ -22,6 +23,7 @@ export class ClientesComponent implements OnInit {
 
   constructor(
     private clientesService: ClientesService,
+    private modalService: ModalService,
     @Inject(PLATFORM_ID) private platformId: Object,
     private cdr: ChangeDetectorRef
   ) {}
@@ -111,8 +113,14 @@ export class ClientesComponent implements OnInit {
     });
   }
 
-  eliminarCliente(id: number): void {
-    if (!confirm('¿Eliminar este cliente? Esta acción no se puede deshacer.')) return;
+  async eliminarCliente(id: number): Promise<void> {
+    const confirmar = await this.modalService.confirm(
+      '¿Eliminar este cliente? Esta accion no se puede deshacer.',
+      'Confirmar eliminacion',
+      'Eliminar',
+      'Cancelar'
+    );
+    if (!confirmar) return;
     this.clientesService.eliminarCliente(id).subscribe({
       next: () => {
         this.clientes = this.clientes.filter(c => c.id !== id);
@@ -121,7 +129,7 @@ export class ClientesComponent implements OnInit {
       },
       error: (err) => {
         const msg = err?.error?.error || 'Error al eliminar el cliente.';
-        alert(msg);
+        this.modalService.alert(msg, 'Error', 'error');
         console.error('❌ Error:', err);
         this.cdr.markForCheck();
       }

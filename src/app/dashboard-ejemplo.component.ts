@@ -14,8 +14,8 @@ import { Movimiento } from './models/movimiento.model';
   template: `
     <div class="dashboard-container">
       <header>
-        <h1>Dashboard - Caficultura Verde 💚☕</h1>
-        <p>Sistema de Inventario de Abonos</p>
+        <h1>Dashboard - VillaMar Inventarios</h1>
+        <p>Sistema de Inventario para tienda VillaMar</p>
       </header>
 
       @if (loading) {
@@ -180,7 +180,7 @@ import { Movimiento } from './models/movimiento.model';
       }
 
       <footer>
-        <p>© 2026 DANIEL ROJAS AREVALO - Caficultura Verde 💚</p>
+        <p>© 2026 VillaMar Inventarios</p>
         <button (click)="recargarDatos()" class="btn-reload">🔄 Actualizar Datos</button>
       </footer>
     </div>

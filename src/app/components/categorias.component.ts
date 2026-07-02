@@ -3,6 +3,7 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CategoriasService } from '../services/categorias.service';
 import { Categoria } from '../models/categoria.model';
+import { ModalService } from '../services/modal.service';
 
 @Component({
   selector: 'app-categorias',
@@ -24,6 +25,7 @@ export class CategoriasComponent implements OnInit {
 
   constructor(
     private categoriasService: CategoriasService,
+    private modalService: ModalService,
     @Inject(PLATFORM_ID) private platformId: Object,
     private cdr: ChangeDetectorRef
   ) {
@@ -97,7 +99,7 @@ export class CategoriasComponent implements OnInit {
 
   guardarCategoria(): void {
     if (!this.nuevaCategoria.nombre?.trim()) {
-      alert('El nombre de la categoría es obligatorio');
+      this.modalService.alert('El nombre de la categoria es obligatorio', 'Campos requeridos', 'warning');
       return;
     }
 
@@ -131,8 +133,14 @@ export class CategoriasComponent implements OnInit {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  eliminarCategoria(id: number): void {
-    if (!confirm('¿Estás seguro de eliminar esta categoría? Esta acción no se puede deshacer.')) {
+  async eliminarCategoria(id: number): Promise<void> {
+    const confirmar = await this.modalService.confirm(
+      '¿Estas seguro de eliminar esta categoria? Esta accion no se puede deshacer.',
+      'Confirmar eliminacion',
+      'Eliminar',
+      'Cancelar'
+    );
+    if (!confirmar) {
       return;
     }
 
@@ -145,7 +153,7 @@ export class CategoriasComponent implements OnInit {
       },
       error: (err) => {
         const msg = err?.error?.error || 'Error al eliminar la categoría. Puede estar en uso por algunos productos.';
-        alert(msg);
+        this.modalService.alert(msg, 'Error', 'error');
         console.error('❌ Error:', err);
         this.cdr.markForCheck();
       }

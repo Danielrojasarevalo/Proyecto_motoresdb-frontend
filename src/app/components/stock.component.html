@@ -1,35 +1,35 @@
 <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
   <!-- Formulario de registro -->
-  <div class="rounded-2xl border border-coffee-300 bg-linear-to-br from-white to-coffee-50 p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300">
+  <div class="rounded-2xl border border-slate-200 bg-linear-to-br from-white to-sky-50 p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300">
     <h2 class="text-lg font-semibold">Registrar movimiento</h2>
-    <p class="text-sm text-coffee-600">Entradas y salidas de inventario</p>
+    <p class="text-sm text-slate-600">Entradas y salidas de inventario</p>
     
     <form (ngSubmit)="registrarMovimiento()" class="mt-4 space-y-4">
       <div>
-        <label class="text-xs font-semibold text-coffee-700">Tipo de movimiento *</label>
+        <label class="text-xs font-semibold text-slate-700">Tipo de movimiento *</label>
         <select 
           [(ngModel)]="nuevoMovimiento.tipo_movimiento" 
           name="tipo" 
-          class="mt-1 w-full rounded-lg border border-coffee-300 px-3 py-2 text-sm focus:border-coffee-500 focus:ring-2 focus:ring-coffee-300 transition-all duration-200">
+          class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-sky-500 focus:ring-2 focus:ring-sky-200 transition-all duration-200">
           <option value="entrada">📥 Entrada</option>
           <option value="salida">📤 Salida</option>
         </select>
       </div>
       
       <div>
-        <label class="text-xs font-semibold text-coffee-700">Producto *</label>
+        <label class="text-xs font-semibold text-slate-700">Producto *</label>
         <select 
           [(ngModel)]="nuevoMovimiento.producto" 
           name="producto"
           (ngModelChange)="seleccionarProducto($event)"
-          class="mt-1 w-full rounded-lg border border-coffee-300 px-3 py-2 text-sm focus:border-coffee-500 focus:ring-2 focus:ring-coffee-300 transition-all duration-200">
+          class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-sky-500 focus:ring-2 focus:ring-sky-200 transition-all duration-200">
           <option [value]="0">Selecciona un producto</option>
           @for (producto of productos; track producto.id) {
             <option [value]="producto.id">{{ producto.nombre }} (Stock: {{ producto.stock_actual }} {{ producto.unidad_medida }})</option>
           }
         </select>
         @if (productoSeleccionado) {
-          <p class="mt-1 text-xs text-coffee-600">
+          <p class="mt-1 text-xs text-slate-600">
             Stock actual: {{ productoSeleccionado.stock_actual }} {{ productoSeleccionado.unidad_medida }}
           </p>
         }
@@ -37,34 +37,34 @@
       
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div>
-          <label class="text-xs font-semibold text-coffee-700">Cantidad *</label>
+          <label class="text-xs font-semibold text-slate-700">Cantidad *</label>
           <input 
             [(ngModel)]="nuevoMovimiento.cantidad" 
             name="cantidad" 
             type="number" 
             min="0.01"
             step="0.01"
-            class="mt-1 w-full rounded-lg border border-coffee-300 px-3 py-2 text-sm focus:border-coffee-500 focus:ring-2 focus:ring-coffee-300 transition-all duration-200" 
+            class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-sky-500 focus:ring-2 focus:ring-sky-200 transition-all duration-200" 
             placeholder="0" 
           />
         </div>
         <div>
-          <label class="text-xs font-semibold text-coffee-700">Fecha *</label>
+          <label class="text-xs font-semibold text-slate-700">Fecha *</label>
           <input 
             [(ngModel)]="nuevoMovimiento.fecha_movimiento" 
             name="fecha" 
             type="date" 
-            class="mt-1 w-full rounded-lg border border-coffee-300 px-3 py-2 text-sm focus:border-coffee-500 focus:ring-2 focus:ring-coffee-300 transition-all duration-200" 
+            class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-sky-500 focus:ring-2 focus:ring-sky-200 transition-all duration-200" 
           />
         </div>
       </div>
       
       <div>
-        <label class="text-xs font-semibold text-coffee-700">Proveedor (opcional)</label>
+        <label class="text-xs font-semibold text-slate-700">Proveedor (opcional)</label>
         <select 
           [(ngModel)]="nuevoMovimiento.proveedor" 
           name="proveedor" 
-          class="mt-1 w-full rounded-lg border border-coffee-300 px-3 py-2 text-sm focus:border-coffee-500 focus:ring-2 focus:ring-coffee-300 transition-all duration-200">
+          class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-sky-500 focus:ring-2 focus:ring-sky-200 transition-all duration-200">
           <option [value]="0">Sin proveedor</option>
           @for (proveedor of proveedores; track proveedor.id) {
             <option [value]="proveedor.id">{{ proveedor.nombre }}</option>
@@ -73,23 +73,23 @@
       </div>
 
       <div>
-        <label class="text-xs font-semibold text-coffee-700">Referencia (opcional)</label>
+        <label class="text-xs font-semibold text-slate-700">Referencia (opcional)</label>
         <input 
           [(ngModel)]="nuevoMovimiento.referencia" 
           name="referencia" 
           type="text" 
-          class="mt-1 w-full rounded-lg border border-coffee-300 px-3 py-2 text-sm focus:border-coffee-500 focus:ring-2 focus:ring-coffee-300 transition-all duration-200" 
+          class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-sky-500 focus:ring-2 focus:ring-sky-200 transition-all duration-200" 
           placeholder="Ej: Factura #123, Orden #456" 
         />
       </div>
 
       <div>
-        <label class="text-xs font-semibold text-coffee-700">Observaciones (opcional)</label>
+        <label class="text-xs font-semibold text-slate-700">Observaciones (opcional)</label>
         <textarea 
           [(ngModel)]="nuevoMovimiento.observaciones" 
           name="observaciones" 
           rows="2"
-          class="mt-1 w-full rounded-lg border border-coffee-300 px-3 py-2 text-sm focus:border-coffee-500 focus:ring-2 focus:ring-coffee-300 transition-all duration-200" 
+          class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-sky-500 focus:ring-2 focus:ring-sky-200 transition-all duration-200" 
           placeholder="Notas adicionales...">
         </textarea>
       </div>
@@ -97,41 +97,41 @@
       <button 
         type="submit" 
         [disabled]="guardando"
-        class="w-full rounded-lg bg-coffee-600 px-4 py-2 text-sm font-semibold text-white hover:bg-coffee-700 transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed">
+        class="w-full rounded-lg bg-sky-600 px-4 py-2 text-sm font-semibold text-white hover:bg-sky-700 transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed">
         {{ guardando ? '⏳ Registrando...' : '💾 Registrar movimiento' }}
       </button>
     </form>
   </div>
 
   <!-- Lista de movimientos recientes -->
-  <div class="rounded-2xl border border-coffee-300 bg-white p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300">
+  <div class="rounded-2xl border border-slate-200 bg-white p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300">
     <div class="flex items-center justify-between mb-4">
       <div>
         <h2 class="text-lg font-semibold">Movimientos recientes</h2>
-        <p class="text-sm text-coffee-600">Últimos 30 días</p>
+        <p class="text-sm text-slate-600">Últimos 30 días</p>
       </div>
       <button 
         type="button"
         (click)="cargarMovimientos()"
-        class="text-coffee-600 hover:text-coffee-800 text-sm font-medium">
+        class="text-slate-600 hover:text-slate-800 text-sm font-medium">
         🔄 Actualizar
       </button>
     </div>
     
     @if (loading) {
-      <p class="text-center py-8 text-coffee-600">⏳ Cargando movimientos...</p>
+      <p class="text-center py-8 text-slate-600">⏳ Cargando movimientos...</p>
     } @else if (movimientosRecientes.length === 0) {
-      <p class="text-center text-coffee-600 py-8">No hay movimientos registrados</p>
+      <p class="text-center text-slate-600 py-8">No hay movimientos registrados</p>
     } @else {
       <div class="space-y-3 text-sm max-h-150 overflow-y-auto">
         @for (movimiento of movimientosRecientes; track movimiento.id) {
-          <div class="flex items-center justify-between rounded-lg bg-coffee-50 px-3 sm:px-4 py-3 hover:bg-coffee-100 transition-all duration-200 hover:scale-105">
+          <div class="flex items-center justify-between rounded-lg bg-slate-50 px-3 sm:px-4 py-3 hover:bg-slate-100 transition-all duration-200 hover:scale-105">
             <div class="min-w-0 flex-1">
               <div class="flex items-center gap-2">
                 <span class="text-lg">{{ movimiento.tipo_movimiento === 'entrada' ? '📥' : '📤' }}</span>
                 <div class="min-w-0 flex-1">
                   <p class="font-semibold truncate">{{ movimiento.producto_nombre }}</p>
-                  <p class="text-xs text-coffee-600 truncate">
+                  <p class="text-xs text-slate-600 truncate">
                     @if (movimiento.proveedor_nombre) {
                       Proveedor: {{ movimiento.proveedor_nombre }}
                     } @else if (movimiento.referencia) {
@@ -141,7 +141,7 @@
                     }
                   </p>
                   @if (movimiento.observaciones) {
-                    <p class="text-xs text-coffee-500 italic truncate">{{ movimiento.observaciones }}</p>
+                    <p class="text-xs text-slate-500 italic truncate">{{ movimiento.observaciones }}</p>
                   }
                 </div>
               </div>
@@ -150,7 +150,7 @@
               <p [class]="'font-semibold text-lg ' + (movimiento.tipo_movimiento === 'entrada' ? 'text-green-600' : 'text-red-600')">
                 {{ movimiento.tipo_movimiento === 'entrada' ? '+' : '-' }}{{ movimiento.cantidad }}
               </p>
-              <p class="text-xs text-coffee-500 whitespace-nowrap">{{ formatearFecha(movimiento.fecha_movimiento) }}</p>
+              <p class="text-xs text-slate-500 whitespace-nowrap">{{ formatearFecha(movimiento.fecha_movimiento) }}</p>
             </div>
           </div>
         }
