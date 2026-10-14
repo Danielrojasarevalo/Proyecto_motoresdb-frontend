@@ -35,6 +35,23 @@
       </div>
     </div>
 
+    <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <h3 class="text-sm font-semibold text-slate-800">Descargas de reportes</h3>
+        <p class="text-xs text-slate-500">Descarga ambas gráficas con los mismos colores y estructura del panel.</p>
+      </div>
+      <div class="flex flex-wrap gap-2">
+        <button type="button" (click)="descargarReportePDF()"
+          class="rounded-lg bg-sky-600 px-4 py-2 text-sm font-semibold text-white hover:bg-sky-700 transition-all duration-200 hover:scale-105 shadow-lg">
+          Descargar PDF
+        </button>
+        <button type="button" (click)="descargarReporteExcel()"
+          class="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700 transition-all duration-200 hover:scale-105 shadow-lg">
+          Descargar Excel
+        </button>
+      </div>
+    </div>
+
     <!-- Gráficas -->
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
       <div class="rounded-2xl border border-slate-300 bg-white p-5 shadow-lg">

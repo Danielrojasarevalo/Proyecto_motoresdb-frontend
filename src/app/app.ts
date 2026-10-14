@@ -4,12 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
 import { AppModalComponent } from './components/app-modal.component';
 import { ProductosService } from './services/productos.service';
+import { AuthService } from './services/auth.service';
 import { Producto } from './models/producto.model';
 
 @Component({
   selector: 'app-root',
   imports: [
-    CommonModule, 
+    CommonModule,
     FormsModule,
     RouterModule,
     AppModalComponent
@@ -24,6 +25,7 @@ export class App implements OnInit {
   constructor(
     private productosService: ProductosService,
     public router: Router,
+    public auth: AuthService,
     @Inject(PLATFORM_ID) private platformId: Object,
     private cdr: ChangeDetectorRef
   ) {}
@@ -50,7 +52,11 @@ export class App implements OnInit {
   }
 
   isActive(route: string): boolean {
-    return this.router.url === '/' + route || (route === 'dashboard' && this.router.url === '/');
+    const current = this.router.url.split('?')[0].replace(/\/$/, '');
+    if (route === 'dashboard' && (current === '' || current === '/')) {
+      return true;
+    }
+    return current === '/' + route || current.startsWith('/' + route + '/');
   }
 
   get porcentajeStockSaludable(): number {
@@ -59,5 +65,10 @@ export class App implements OnInit {
     const stockMaxTotal = this.productos.reduce((s, p) => s + (p.stock_maximo || 0), 0);
     if (stockMaxTotal === 0) return 0;
     return Math.min(100, Math.round((stockActualTotal / stockMaxTotal) * 100));
+  }
+
+  logout(): void {
+    this.auth.logout();
+    this.router.navigateByUrl('/login');
   }
 }

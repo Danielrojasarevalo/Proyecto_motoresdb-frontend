@@ -18,6 +18,11 @@ export class ReportesComponent implements OnInit {
   error: string | null = null;
   resumen: any = null;
   statsData: any = null;
+  public labels: string[] = [];
+  public entradas: number[] = [];
+  public salidas: number[] = [];
+  public ingresados: number[] = [];
+  public pendientes: number[] = [];
 
   constructor(
     private movimientosService: MovimientosService,
@@ -102,6 +107,9 @@ export class ReportesComponent implements OnInit {
         .reduce((s: number, f: any) => s + parseFloat(f.total || '0'), 0)
     );
 
+    const maxMovimiento = Math.max(...entradas, ...salidas, 10);
+    const maxFacturacion = Math.max(...ingresados, ...pendientes, 100);
+
     // Limpiar instancias previas si existen
     const c1 = document.getElementById('chartMovimientos') as HTMLCanvasElement | null;
     const c2 = document.getElementById('chartFacturas') as HTMLCanvasElement | null;
@@ -140,11 +148,23 @@ export class ReportesComponent implements OnInit {
       options: {
         responsive: true,
         plugins: { legend: { position: 'top' } },
-        scales: { y: { beginAtZero: true, max: 1000, ticks: { stepSize: 1 } } }
+        scales: {
+          y: {
+            beginAtZero: true,
+            suggestedMax: Math.ceil(maxMovimiento * 1.2),
+            ticks: { stepSize: Math.ceil(Math.max(maxMovimiento / 5, 1)) }
+          }
+        }
       }
     });
 
     // Gráfica 2 — facturación pagada vs pendiente
+    this.labels = labels;
+    this.entradas = entradas;
+    this.salidas = salidas;
+    this.ingresados = ingresados;
+    this.pendientes = pendientes;
+
     new Chart(c2, {
       type: 'bar',
       data: {
@@ -174,14 +194,115 @@ export class ReportesComponent implements OnInit {
         scales: {
           y: {
             beginAtZero: true,
-            max: 40000000,
+            suggestedMax: Math.ceil(maxFacturacion * 1.2),
             ticks: {
-              callback: (v: any) => '$' + Number(v).toLocaleString('es-CO')
+              callback: (v: any) => '$' + Number(v).toLocaleString('es-CO'),
+              stepSize: Math.ceil(Math.max(maxFacturacion / 5, 1))
             }
           }
         }
       }
     });
+  }
+
+  async descargarReportePDF(): Promise<void> {
+    const { default: jsPDF } = await import('jspdf');
+    const doc = new jsPDF({ orientation: 'landscape' });
+    const margen = 14;
+    const canvas1 = document.getElementById('chartMovimientos') as HTMLCanvasElement | null;
+    const canvas2 = document.getElementById('chartFacturas') as HTMLCanvasElement | null;
+
+    doc.setFillColor(14, 165, 233);
+    doc.rect(0, 0, doc.internal.pageSize.getWidth(), 22, 'F');
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(14);
+    doc.text('VillaMar Inventarios · Reportes', margen, 15);
+    doc.setFontSize(9);
+    doc.text('Descarga de gráficos y datos clave', margen, 21);
+
+    let y = 30;
+    if (canvas1) {
+      const imageData1 = canvas1.toDataURL('image/png');
+      doc.addImage(imageData1, 'PNG', margen, y, 125, 70);
+    }
+    if (canvas2) {
+      const imageData2 = canvas2.toDataURL('image/png');
+      doc.addImage(imageData2, 'PNG', 145, y, 125, 70);
+    }
+
+    y += 78;
+    doc.setFontSize(10);
+    doc.setTextColor(51, 65, 85);
+    doc.text('Meses', margen, y + 6);
+    doc.setFontSize(8);
+    doc.text('Este PDF descarga ambas gráficas con la misma estética de la aplicación.', margen, y + 12);
+
+    doc.save('reportes-villamar.pdf');
+  }
+
+  descargarReporteExcel(): void {
+    const rows = [
+      ['Mes', 'Entradas (uds.)', 'Salidas (uds.)', 'Pagadas ($)', 'Pendientes ($)']
+    ];
+    let totalEntradas = 0;
+    let totalSalidas = 0;
+    let totalPagadas = 0;
+    let totalPendientes = 0;
+
+    for (let i = 0; i < this.labels.length; i++) {
+      const entrada = Number(this.entradas[i] ?? 0);
+      const salida = Number(this.salidas[i] ?? 0);
+      const pagada = Number(this.ingresados[i] ?? 0);
+      const pendiente = Number(this.pendientes[i] ?? 0);
+      totalEntradas += entrada;
+      totalSalidas += salida;
+      totalPagadas += pagada;
+      totalPendientes += pendiente;
+      rows.push([
+        this.labels[i],
+        entrada.toLocaleString('es-CO'),
+        salida.toLocaleString('es-CO'),
+        pagada.toLocaleString('es-CO'),
+        pendiente.toLocaleString('es-CO')
+      ]);
+    }
+
+    rows.push([
+      'Total',
+      totalEntradas.toLocaleString('es-CO'),
+      totalSalidas.toLocaleString('es-CO'),
+      totalPagadas.toLocaleString('es-CO'),
+      totalPendientes.toLocaleString('es-CO')
+    ]);
+
+    const htmlRows = rows
+      .map((row, index) => {
+        const cells = row
+          .map(cell => `<td style="border:1px solid #ccc;padding:8px;vertical-align:middle;">${cell}</td>`)
+          .join('');
+        const rowStyle = index === 0 ? 'background:#0ea5e9;color:#ffffff;font-weight:700;' : index === rows.length - 1 ? 'background:#f8fafc;font-weight:700;' : '';
+        return `<tr style="${rowStyle}">${cells}</tr>`;
+      })
+      .join('');
+
+    const html = `<!DOCTYPE html><html><head><meta charset="UTF-8" /><style>
+      table { border-collapse:collapse; font-family:Arial, sans-serif; width:100%; }
+      th, td { border:1px solid #ccc; padding:8px; }
+      th { background:#0ea5e9; color:#fff; font-weight:700; }
+      .summary { background:#f8fafc; font-weight:700; }
+    </style></head><body>
+      <h2>Reportes VillaMar</h2>
+      <p>Datos descargados el ${new Date().toLocaleDateString('es-CO')}.</p>
+      <table>${htmlRows}</table>
+    </body></html>`;
+
+    const blob = new Blob([html], { type: 'application/vnd.ms-excel' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `reportes-villamar-${new Date().toISOString().slice(0, 10)}.xls`;
+    link.click();
+    URL.revokeObjectURL(url);
   }
 
   fmt(valor: any): string {

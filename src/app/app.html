@@ -29,106 +29,117 @@
 				<p class="mb-3 text-xs font-semibold uppercase tracking-widest text-slate-500">Menú</p>
 				<ul class="space-y-1 sm:space-y-2 text-sm">
 					<li>
-						<button
-							routerLink="/dashboard"
+						<a routerLink="/dashboard"
+							routerLinkActive="font-semibold bg-sky-100 shadow-lg"
+							[routerLinkActiveOptions]="{ exact: true }"
 							class="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left font-semibold text-slate-800 transition-all duration-200 hover:scale-105"
 							[class.bg-sky-100]="isActive('dashboard')"
 							[class.shadow-lg]="isActive('dashboard')"
 						>
 							📊 Información
-						</button>
+						</a>
 					</li>
 					<li>
-						<button
-							routerLink="/productos"
+						<a routerLink="/productos"
 							class="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-slate-700 hover:bg-slate-100 transition-all duration-200 hover:scale-105"
 							[class.bg-sky-100]="isActive('productos')"
 							[class.font-semibold]="isActive('productos')"
 						>
 							📦 Productos
-						</button>
+						</a>
 					</li>
 					<li>
-						<button
-							routerLink="/stock"
+						<a routerLink="/stock"
 							class="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-slate-700 hover:bg-slate-100 transition-all duration-200 hover:scale-105"
 							[class.bg-sky-100]="isActive('stock')"
 							[class.font-semibold]="isActive('stock')"
 						>
 							📥 Stock
-						</button>
+						</a>
 					</li>
 					<li>
-						<button
-							routerLink="/facturacion"
+						<a routerLink="/venta"
+							class="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-slate-700 hover:bg-slate-100 transition-all duration-200 hover:scale-105"
+							[class.bg-sky-100]="isActive('venta')"
+							[class.font-semibold]="isActive('venta')"
+						>
+							🛒 Venta
+						</a>
+					</li>
+					<li>
+						<a routerLink="/facturacion"
 							class="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-slate-700 hover:bg-slate-100 transition-all duration-200 hover:scale-105"
 							[class.bg-sky-100]="isActive('facturacion')"
 							[class.font-semibold]="isActive('facturacion')"
 						>
 							🧾 Facturación
-						</button>
+						</a>
 					</li>
 					<li>
-						<button
-							routerLink="/reportes"
+						<a routerLink="/reportes"
 							class="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-slate-700 hover:bg-slate-100 transition-all duration-200 hover:scale-105"
 							[class.bg-sky-100]="isActive('reportes')"
 							[class.font-semibold]="isActive('reportes')"
 						>
 							📈 Reportes
-						</button>
+						</a>
 					</li>
 					<li>
-						<button
-							routerLink="/proveedores"
+						<a routerLink="/proveedores"
 							class="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-slate-700 hover:bg-slate-100 transition-all duration-200 hover:scale-105"
 							[class.bg-sky-100]="isActive('proveedores')"
 							[class.font-semibold]="isActive('proveedores')"
 						>
 							🏢 Proveedores
-						</button>
+						</a>
 					</li>
 					<li>
-						<button
-							routerLink="/categorias"
+						<a routerLink="/categorias"
 							class="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-slate-700 hover:bg-slate-100 transition-all duration-200 hover:scale-105"
 							[class.bg-sky-100]="isActive('categorias')"
 							[class.font-semibold]="isActive('categorias')"
 						>
 							📂 Categorías
-						</button>
+						</a>
 					</li>
 					<li>
-						<button
-							routerLink="/clientes"
+						<a routerLink="/clientes"
 							class="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-slate-700 hover:bg-slate-100 transition-all duration-200 hover:scale-105"
 							[class.bg-sky-100]="isActive('clientes')"
 							[class.font-semibold]="isActive('clientes')"
 						>
 							👥 Clientes
-						</button>
+						</a>
 					</li>
 					<li>
-						<button
-							routerLink="/manual"
+						<a routerLink="/manual"
 							class="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-slate-700 hover:bg-slate-100 transition-all duration-200 hover:scale-105"
 							[class.bg-sky-100]="isActive('manual')"
 							[class.font-semibold]="isActive('manual')"
 						>
 							📘 Manual de Usuario
-						</button>
+						</a>
 					</li>
 				</ul>
-			</nav>
 
-		<div class="mt-6 rounded-2xl bg-sky-700 p-5 text-white shadow-xl hover:shadow-2xl transition-all duration-300 animate-fadeIn">
-			<p class="text-sm font-semibold">Estado del inventario</p>
-			<p class="mt-1 text-3xl font-bold animate-pulse">{{ porcentajeStockSaludable }}%</p>
-			<p class="mt-2 text-xs text-white">Stock actual vs stock máximo</p>
-				<button routerLink="/reportes" class="mt-4 w-full rounded-lg bg-white/10 px-3 py-2 text-xs font-semibold hover:bg-white/20 transition-all duration-200 hover:scale-105">
-					Ver reportes
-				</button>
-			</div>
+                <div class="mt-6 space-y-2 border-t border-slate-200/80 pt-4">
+                    <a
+                        href="http://localhost:8000/admin"
+                        target="_blank"
+                        rel="noreferrer"
+                        class="flex w-full items-center justify-center rounded-2xl border border-slate-300 bg-slate-50 px-3 py-2 text-sm font-semibold text-slate-800 transition-all duration-200 hover:bg-slate-100"
+                    >
+                        🛠 Ir al admin Django
+                    </a>
+                    <button
+                        type="button"
+                        (click)="logout()"
+                        class="w-full rounded-2xl bg-rose-500 px-3 py-2 text-sm font-semibold text-white transition-all duration-200 hover:bg-rose-600"
+                    >
+                        🚪 Cerrar sesión
+                    </button>
+                </div>
+            </nav>
 		</aside>
 
 		<!-- Main content -->

@@ -12,6 +12,14 @@ export interface ModalState {
   showCancel: boolean;
 }
 
+export interface ToastState {
+  open: boolean;
+  title: string;
+  message: string;
+  type: ModalType;
+  duration: number;
+}
+
 @Injectable({ providedIn: 'root' })
 export class ModalService {
   private readonly initialState: ModalState = {
@@ -27,15 +35,19 @@ export class ModalService {
   private readonly _state = signal<ModalState>(this.initialState);
   readonly state = this._state.asReadonly();
 
-  private pendingResolver: ((accepted: boolean) => void) | null = null;
+  private readonly _toast = signal<ToastState | null>(null);
+  readonly toast = this._toast.asReadonly();
 
-  alert(message: string, title = 'Aviso', type: ModalType = 'info'): void {
-    this.show({
+  private pendingResolver: ((accepted: boolean) => void) | null = null;
+  private toastTimeout: ReturnType<typeof setTimeout> | null = null;
+
+  alert(message: string, title = 'Aviso', type: ModalType = 'info', duration = 4000): void {
+    this.showToast({
       title,
       message,
       type,
-      confirmText: 'Aceptar',
-      showCancel: false
+      duration,
+      open: true
     });
   }
 
@@ -53,6 +65,14 @@ export class ModalService {
     });
   }
 
+  dismissToast(): void {
+    if (this.toastTimeout) {
+      clearTimeout(this.toastTimeout);
+      this.toastTimeout = null;
+    }
+    this._toast.set(null);
+  }
+
   accept(): void {
     this.close(true);
   }
@@ -67,6 +87,15 @@ export class ModalService {
       ...config,
       open: true
     });
+  }
+
+  private showToast(config: ToastState): void {
+    if (this.toastTimeout) {
+      clearTimeout(this.toastTimeout);
+      this.toastTimeout = null;
+    }
+    this._toast.set(config);
+    this.toastTimeout = setTimeout(() => this.dismissToast(), config.duration);
   }
 
   private close(accepted: boolean): void {
