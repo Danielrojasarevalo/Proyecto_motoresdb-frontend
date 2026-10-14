@@ -6,3 +6,5 @@ export * from './cliente.model';
 export * from './movimiento.model';
 export * from './factura.model';
 export * from './dashboard.model';
+export * from './fiesta.model';
+export * from './glamping.model';

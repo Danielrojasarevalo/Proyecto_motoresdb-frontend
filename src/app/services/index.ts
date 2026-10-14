@@ -6,3 +6,5 @@ export * from './clientes.service';
 export * from './movimientos.service';
 export * from './facturas.service';
 export * from './dashboard.service';
+export * from './fiestas.service';
+export * from './glampings.service';

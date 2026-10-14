@@ -1,0 +1,208 @@
+<div class="rounded-2xl border border-slate-300 bg-linear-to-br from-white to-slate-50 p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300">
+  <div class="mb-6">
+    <h2 class="text-lg font-semibold">🎉 Fiestas</h2>
+    <p class="text-sm text-slate-600">Agenda las fiestas del salón de arriba de la tienda: fecha, cuánto se cobra y descripción</p>
+  </div>
+
+  <!-- Formulario -->
+  <div class="mb-6 rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+    <h3 class="mb-3 text-sm font-semibold text-slate-700">
+      {{ modoEdicion ? '✏️ Editar fiesta' : '➕ Agendar fiesta' }}
+    </h3>
+
+    @if (error) {
+      <div class="mb-4 rounded-lg bg-red-50 border border-red-200 p-3 text-sm text-red-700">
+        ⚠️ {{ error }}
+      </div>
+    }
+
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div>
+        <label class="text-xs font-semibold text-slate-700">Nombre del cliente *</label>
+        <input type="text" [(ngModel)]="nuevaFiesta.nombre_cliente" name="nombre_cliente" placeholder="Ej: María Pérez"
+          class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-sky-500 focus:ring-2 focus:ring-sky-300 transition-all duration-200" />
+      </div>
+
+      <div>
+        <label class="text-xs font-semibold text-slate-700">Teléfono</label>
+        <input type="tel" [(ngModel)]="nuevaFiesta.telefono" name="telefono" placeholder="Ej: 300 123 4567"
+          class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-sky-500 focus:ring-2 focus:ring-sky-300 transition-all duration-200" />
+      </div>
+
+      <div>
+        <label class="text-xs font-semibold text-slate-700">Tipo de evento</label>
+        <input type="text" [(ngModel)]="nuevaFiesta.tipo_evento" name="tipo_evento" placeholder="Ej: Cumpleaños, Grado, Boda..."
+          class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-sky-500 focus:ring-2 focus:ring-sky-300 transition-all duration-200" />
+      </div>
+
+      <div>
+        <label class="text-xs font-semibold text-slate-700">Fecha *</label>
+        <input type="date" [(ngModel)]="nuevaFiesta.fecha" name="fecha"
+          class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-sky-500 focus:ring-2 focus:ring-sky-300 transition-all duration-200" />
+      </div>
+
+      <div class="grid grid-cols-2 gap-2">
+        <div>
+          <label class="text-xs font-semibold text-slate-700">Hora inicio</label>
+          <input type="time" [(ngModel)]="nuevaFiesta.hora_inicio" name="hora_inicio"
+            class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-sky-500 focus:ring-2 focus:ring-sky-300 transition-all duration-200" />
+        </div>
+        <div>
+          <label class="text-xs font-semibold text-slate-700">Hora fin</label>
+          <input type="time" [(ngModel)]="nuevaFiesta.hora_fin" name="hora_fin"
+            class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-sky-500 focus:ring-2 focus:ring-sky-300 transition-all duration-200" />
+        </div>
+      </div>
+
+      <div>
+        <label class="text-xs font-semibold text-slate-700">Número de personas</label>
+        <input type="number" min="1" [(ngModel)]="nuevaFiesta.numero_personas" name="numero_personas" placeholder="Ej: 50"
+          class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-sky-500 focus:ring-2 focus:ring-sky-300 transition-all duration-200" />
+      </div>
+
+      <div>
+        <label class="text-xs font-semibold text-slate-700">Precio (cuánto se cobra) *</label>
+        <input type="number" min="0" step="1000" [(ngModel)]="nuevaFiesta.precio" name="precio" placeholder="Ej: 500000"
+          class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-sky-500 focus:ring-2 focus:ring-sky-300 transition-all duration-200" />
+      </div>
+
+      <div>
+        <label class="text-xs font-semibold text-slate-700">Abono recibido</label>
+        <input type="number" min="0" step="1000" [(ngModel)]="nuevaFiesta.abono" name="abono" placeholder="0"
+          class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-sky-500 focus:ring-2 focus:ring-sky-300 transition-all duration-200" />
+      </div>
+
+      <div>
+        <label class="text-xs font-semibold text-slate-700">Estado</label>
+        <select [(ngModel)]="nuevaFiesta.estado" name="estado"
+          class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-sky-500 focus:ring-2 focus:ring-sky-300 transition-all duration-200">
+          @for (e of estados; track e.valor) {
+            <option [value]="e.valor">{{ e.etiqueta }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="sm:col-span-2 lg:col-span-3">
+        <label class="text-xs font-semibold text-slate-700">Descripción</label>
+        <textarea [(ngModel)]="nuevaFiesta.descripcion" name="descripcion" rows="3"
+          placeholder="Detalles de la fiesta: decoración, música, comida, lo que incluye..."
+          class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-sky-500 focus:ring-2 focus:ring-sky-300 transition-all duration-200"></textarea>
+      </div>
+    </div>
+
+    <div class="mt-4 flex flex-col sm:flex-row gap-2">
+      <button type="button" (click)="guardarFiesta()" [disabled]="guardando"
+        class="rounded-lg bg-sky-600 px-4 py-2 text-sm font-semibold text-white hover:bg-sky-700 transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed">
+        {{ guardando ? '⏳ Guardando...' : (modoEdicion ? '💾 Actualizar' : '➕ Agendar fiesta') }}
+      </button>
+      <button type="button" [hidden]="!modoEdicion" (click)="limpiarFormulario()"
+        class="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-all duration-200 hover:scale-105">
+        ❌ Cancelar
+      </button>
+    </div>
+  </div>
+
+  <!-- Lista de fiestas -->
+  <div class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+    <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <h3 class="text-sm font-semibold text-slate-700">📅 Fiestas agendadas</h3>
+      <div class="flex flex-wrap items-center gap-3 text-sm">
+        <select [(ngModel)]="filtroEstado" name="filtroEstado"
+          class="rounded-lg border border-slate-300 px-3 py-1.5 text-sm">
+          <option value="">Todos los estados</option>
+          @for (e of estados; track e.valor) {
+            <option [value]="e.valor">{{ e.etiqueta }}</option>
+          }
+        </select>
+        <label class="flex items-center gap-2 text-slate-600">
+          <input type="checkbox" [(ngModel)]="mostrarPasadas" name="mostrarPasadas" />
+          Ver fiestas pasadas
+        </label>
+      </div>
+    </div>
+
+    @if (!loading && fiestasFiltradas.length > 0) {
+      <div class="mb-4 grid grid-cols-2 gap-3">
+        <div class="rounded-lg bg-sky-50 p-3">
+          <p class="text-xs text-slate-500">Total fiestas</p>
+          <p class="text-lg font-semibold text-sky-700">${{ formatearPrecio(totalFiestas) }}</p>
+        </div>
+        <div class="rounded-lg bg-amber-50 p-3">
+          <p class="text-xs text-slate-500">Saldo por cobrar</p>
+          <p class="text-lg font-semibold text-amber-700">${{ formatearPrecio(totalPorCobrar) }}</p>
+        </div>
+      </div>
+    }
+
+    @if (loading) {
+      <p class="text-center py-8 text-slate-600">⏳ Cargando fiestas...</p>
+    } @else if (fiestasFiltradas.length === 0) {
+      <div class="text-center py-8">
+        <p class="text-slate-600 mb-2">📭 No hay fiestas agendadas</p>
+        <p class="text-xs text-slate-500">Agenda una fiesta usando el formulario de arriba</p>
+      </div>
+    } @else {
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        @for (fiesta of fiestasFiltradas; track fiesta.id) {
+          <div class="rounded-lg border border-slate-200 bg-slate-50 p-4 hover:shadow-md transition-all duration-200">
+            <div class="flex items-start justify-between gap-2 mb-2">
+              <div>
+                <h4 class="font-semibold text-slate-800">{{ fiesta.nombre_cliente }}</h4>
+                <p class="text-xs text-slate-500">
+                  📅 {{ formatearFecha(fiesta.fecha) }}
+                  @if (fiesta.hora_inicio) {
+                    · 🕒 {{ fiesta.hora_inicio.slice(0, 5) }}@if (fiesta.hora_fin) { – {{ fiesta.hora_fin.slice(0, 5) }} }
+                  }
+                </p>
+              </div>
+              <div class="flex gap-1">
+                <button (click)="editarFiesta(fiesta)" class="rounded p-1 text-blue-600 hover:bg-blue-100 transition-all duration-200" title="Editar">✏️</button>
+                @if (fiesta.id) {
+                  <button (click)="eliminarFiesta(fiesta.id)" class="rounded p-1 text-red-600 hover:bg-red-100 transition-all duration-200" title="Eliminar">🗑️</button>
+                }
+              </div>
+            </div>
+
+            <div class="mb-2 flex flex-wrap gap-2 text-xs">
+              @if (fiesta.tipo_evento) {
+                <span class="rounded-full bg-violet-100 px-2 py-0.5 text-violet-700">{{ fiesta.tipo_evento }}</span>
+              }
+              @if (fiesta.numero_personas) {
+                <span class="rounded-full bg-slate-200 px-2 py-0.5 text-slate-700">👥 {{ fiesta.numero_personas }} personas</span>
+              }
+              @if (fiesta.telefono) {
+                <span class="rounded-full bg-slate-200 px-2 py-0.5 text-slate-700">📞 {{ fiesta.telefono }}</span>
+              }
+            </div>
+
+            <div class="mb-2 grid grid-cols-3 gap-2 text-xs">
+              <div>
+                <p class="text-slate-500">Precio</p>
+                <p class="font-semibold text-slate-800">${{ formatearPrecio(fiesta.precio) }}</p>
+              </div>
+              <div>
+                <p class="text-slate-500">Abono</p>
+                <p class="font-semibold text-emerald-700">${{ formatearPrecio(fiesta.abono) }}</p>
+              </div>
+              <div>
+                <p class="text-slate-500">Saldo</p>
+                <p class="font-semibold text-amber-700">${{ formatearPrecio(fiesta.saldo) }}</p>
+              </div>
+            </div>
+
+            @if (fiesta.descripcion) {
+              <p class="mb-2 whitespace-pre-line text-xs text-slate-600">{{ fiesta.descripcion }}</p>
+            }
+
+            <select [ngModel]="fiesta.estado" (ngModelChange)="cambiarEstado(fiesta, $event)"
+              [class]="'rounded-full border-0 px-2 py-1 text-xs font-semibold ' + claseEstado(fiesta.estado)">
+              @for (e of estados; track e.valor) {
+                <option [value]="e.valor">{{ e.etiqueta }}</option>
+              }
+            </select>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>
