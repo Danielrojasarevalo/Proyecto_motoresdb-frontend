@@ -1,0 +1,182 @@
+<div class="rounded-2xl border border-slate-300 bg-linear-to-br from-white to-slate-50 p-4 sm:p-6 shadow-lg hover:shadow-xl transition-all duration-300">
+  <div class="mb-6">
+    <h2 class="text-lg font-semibold">⛺ Glamping</h2>
+    <p class="text-sm text-slate-600">Agrega los glampings con sus fotos y sus diferentes precios</p>
+  </div>
+
+  <!-- Formulario -->
+  <div class="mb-6 rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+    <h3 class="mb-3 text-sm font-semibold text-slate-700">
+      {{ modoEdicion ? '✏️ Editar glamping' : '➕ Nuevo glamping' }}
+    </h3>
+
+    @if (error) {
+      <div class="mb-4 rounded-lg bg-red-50 border border-red-200 p-3 text-sm text-red-700">
+        ⚠️ {{ error }}
+      </div>
+    }
+
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+      <div class="sm:col-span-2">
+        <label class="text-xs font-semibold text-slate-700">Nombre *</label>
+        <input type="text" [(ngModel)]="nuevoGlamping.nombre" name="nombre" placeholder="Ej: Domo Vista al Mar"
+          class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-sky-500 focus:ring-2 focus:ring-sky-300 transition-all duration-200" />
+      </div>
+
+      <div>
+        <label class="text-xs font-semibold text-slate-700">Capacidad (personas)</label>
+        <input type="number" min="1" [(ngModel)]="nuevoGlamping.capacidad" name="capacidad" placeholder="Ej: 2"
+          class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-sky-500 focus:ring-2 focus:ring-sky-300 transition-all duration-200" />
+      </div>
+
+      <div class="sm:col-span-3">
+        <label class="text-xs font-semibold text-slate-700">Descripción</label>
+        <textarea [(ngModel)]="nuevoGlamping.descripcion" name="descripcion" rows="3"
+          placeholder="Qué incluye: cama, jacuzzi, desayuno, vista..."
+          class="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-sky-500 focus:ring-2 focus:ring-sky-300 transition-all duration-200"></textarea>
+      </div>
+
+      <!-- Precios -->
+      <div class="sm:col-span-3">
+        <label class="text-xs font-semibold text-slate-700">Precios *</label>
+        <div class="mt-1 space-y-2">
+          @for (precio of nuevoGlamping.precios; track $index; let i = $index) {
+            <div class="flex gap-2">
+              <input type="text" [(ngModel)]="precio.concepto" [name]="'concepto' + i"
+                placeholder="Ej: Noche entre semana, Fin de semana, Temporada alta"
+                class="flex-1 rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-sky-500 focus:ring-2 focus:ring-sky-300 transition-all duration-200" />
+              <input type="number" min="0" step="1000" [(ngModel)]="precio.precio" [name]="'precio' + i" placeholder="Valor"
+                class="w-32 sm:w-40 rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-sky-500 focus:ring-2 focus:ring-sky-300 transition-all duration-200" />
+              <button type="button" (click)="quitarPrecio(i)" [disabled]="nuevoGlamping.precios.length === 1"
+                class="rounded-lg px-2 text-red-600 hover:bg-red-100 disabled:opacity-30" title="Quitar precio">🗑️</button>
+            </div>
+          }
+        </div>
+        <button type="button" (click)="agregarPrecio()"
+          class="mt-2 rounded-lg border border-dashed border-sky-400 px-3 py-1.5 text-xs font-semibold text-sky-700 hover:bg-sky-50">
+          + Agregar otro precio
+        </button>
+      </div>
+
+      <!-- Imágenes -->
+      <div class="sm:col-span-3">
+        <label class="text-xs font-semibold text-slate-700">Imágenes</label>
+        <div class="mt-1 flex flex-wrap gap-2">
+          @for (imagen of nuevoGlamping.imagenes || []; track imagen.id) {
+            <div class="relative h-24 w-24">
+              <img [src]="imagen.imagen" alt="Imagen del glamping" class="h-24 w-24 rounded-lg object-cover border border-slate-200" />
+              <button type="button" (click)="eliminarImagenGuardada(imagen)"
+                class="absolute -right-2 -top-2 rounded-full bg-rose-500 px-1.5 text-xs text-white shadow" title="Eliminar imagen">✕</button>
+            </div>
+          }
+          @for (nuevo of archivosNuevos; track nuevo.vistaPrevia; let i = $index) {
+            <div class="relative h-24 w-24">
+              <img [src]="nuevo.vistaPrevia" alt="Imagen nueva" class="h-24 w-24 rounded-lg object-cover border-2 border-dashed border-sky-400" />
+              <button type="button" (click)="quitarArchivoNuevo(i)"
+                class="absolute -right-2 -top-2 rounded-full bg-slate-600 px-1.5 text-xs text-white shadow" title="Quitar">✕</button>
+            </div>
+          }
+          <label class="flex h-24 w-24 cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-slate-300 text-xs text-slate-500 hover:border-sky-400 hover:text-sky-600">
+            <span class="text-2xl">📷</span>
+            Agregar fotos
+            <input type="file" accept="image/*" multiple class="hidden" (change)="seleccionarImagenes($event)" />
+          </label>
+        </div>
+        @if (archivosNuevos.length) {
+          <p class="mt-1 text-xs text-slate-500">Las fotos nuevas se suben al guardar.</p>
+        }
+      </div>
+
+      <div class="sm:col-span-3">
+        <label class="flex items-center gap-2 text-sm text-slate-700">
+          <input type="checkbox" [(ngModel)]="nuevoGlamping.activo" name="activo" />
+          Disponible para ofrecer
+        </label>
+      </div>
+    </div>
+
+    <div class="mt-4 flex flex-col sm:flex-row gap-2">
+      <button type="button" (click)="guardarGlamping()" [disabled]="guardando"
+        class="rounded-lg bg-sky-600 px-4 py-2 text-sm font-semibold text-white hover:bg-sky-700 transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed">
+        {{ guardando ? '⏳ Guardando...' : (modoEdicion ? '💾 Actualizar' : '➕ Crear Glamping') }}
+      </button>
+      <button type="button" [hidden]="!modoEdicion" (click)="limpiarFormulario()"
+        class="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-all duration-200 hover:scale-105">
+        ❌ Cancelar
+      </button>
+    </div>
+  </div>
+
+  <!-- Lista de glampings -->
+  <div class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+    <h3 class="mb-4 text-sm font-semibold text-slate-700">⛺ Glampings registrados</h3>
+
+    @if (loading) {
+      <p class="text-center py-8 text-slate-600">⏳ Cargando glampings...</p>
+    } @else if (glampings.length === 0) {
+      <div class="text-center py-8">
+        <p class="text-slate-600 mb-2">📭 No hay glampings registrados</p>
+        <p class="text-xs text-slate-500">Crea el primero usando el formulario de arriba</p>
+      </div>
+    } @else {
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        @for (glamping of glampings; track glamping.id) {
+          <div class="overflow-hidden rounded-lg border border-slate-200 bg-slate-50 hover:shadow-md transition-all duration-200"
+            [class.opacity-60]="!glamping.activo">
+            @if (glamping.imagenes?.length) {
+              <img [src]="glamping.imagenes![0].imagen" [alt]="glamping.nombre"
+                class="h-44 w-full cursor-pointer object-cover" (click)="imagenAmpliada = glamping.imagenes![0].imagen" />
+              @if (glamping.imagenes!.length > 1) {
+                <div class="flex gap-1 overflow-x-auto p-2">
+                  @for (imagen of glamping.imagenes!.slice(1); track imagen.id) {
+                    <img [src]="imagen.imagen" [alt]="glamping.nombre"
+                      class="h-12 w-12 flex-none cursor-pointer rounded object-cover" (click)="imagenAmpliada = imagen.imagen" />
+                  }
+                </div>
+              }
+            } @else {
+              <div class="flex h-28 items-center justify-center bg-slate-100 text-3xl">⛺</div>
+            }
+
+            <div class="p-4">
+              <div class="flex items-start justify-between mb-2">
+                <div>
+                  <h4 class="font-semibold text-slate-800">{{ glamping.nombre }}</h4>
+                  <p class="text-xs text-slate-500">
+                    @if (glamping.capacidad) { 👥 {{ glamping.capacidad }} personas · }
+                    {{ glamping.activo ? 'Disponible' : 'No disponible' }}
+                  </p>
+                </div>
+                <div class="flex gap-1">
+                  <button (click)="editarGlamping(glamping)" class="rounded p-1 text-blue-600 hover:bg-blue-100 transition-all duration-200" title="Editar">✏️</button>
+                  @if (glamping.id) {
+                    <button (click)="eliminarGlamping(glamping.id)" class="rounded p-1 text-red-600 hover:bg-red-100 transition-all duration-200" title="Eliminar">🗑️</button>
+                  }
+                </div>
+              </div>
+
+              @if (glamping.descripcion) {
+                <p class="mb-3 whitespace-pre-line text-xs text-slate-600">{{ glamping.descripcion }}</p>
+              }
+
+              <ul class="divide-y divide-slate-200 rounded-lg border border-slate-200 bg-white text-sm">
+                @for (precio of glamping.precios; track precio.id) {
+                  <li class="flex justify-between px-3 py-1.5">
+                    <span class="text-slate-600">{{ precio.concepto }}</span>
+                    <span class="font-semibold text-sky-700">${{ formatearPrecio(precio.precio) }}</span>
+                  </li>
+                }
+              </ul>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+
+  @if (imagenAmpliada) {
+    <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4" (click)="imagenAmpliada = null">
+      <img [src]="imagenAmpliada" alt="Imagen ampliada" class="max-h-full max-w-full rounded-lg shadow-2xl" />
+    </div>
+  }
+</div>

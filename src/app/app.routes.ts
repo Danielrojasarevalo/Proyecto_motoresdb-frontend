@@ -10,6 +10,8 @@ import { ClientesComponent } from './components/clientes.component';
 import { ManualComponent } from './components/manual.component';
 import { DashboardComponent } from './components/dashboard.component';
 import { LoginComponent } from './components/login.component';
+import { FiestasComponent } from './components/fiestas.component';
+import { GlampingsComponent } from './components/glampings.component';
 import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
@@ -25,5 +27,7 @@ export const routes: Routes = [
   { path: 'proveedores', component: ProveedoresComponent, canActivate: [AuthGuard] },
   { path: 'clientes', component: ClientesComponent, canActivate: [AuthGuard] },
   { path: 'manual', component: ManualComponent, canActivate: [AuthGuard] },
+  { path: 'fiestas', component: FiestasComponent, canActivate: [AuthGuard] },
+  { path: 'glamping', component: GlampingsComponent, canActivate: [AuthGuard] },
   { path: '**', redirectTo: '/dashboard' }
 ];

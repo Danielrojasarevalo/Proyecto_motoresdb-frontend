@@ -40,6 +40,24 @@
 						</a>
 					</li>
 					<li>
+						<a routerLink="/fiestas"
+							class="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-slate-700 hover:bg-slate-100 transition-all duration-200 hover:scale-105"
+							[class.bg-sky-100]="isActive('fiestas')"
+							[class.font-semibold]="isActive('fiestas')"
+						>
+							🎉 Fiestas
+						</a>
+					</li>
+					<li>
+						<a routerLink="/glamping"
+							class="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-slate-700 hover:bg-slate-100 transition-all duration-200 hover:scale-105"
+							[class.bg-sky-100]="isActive('glamping')"
+							[class.font-semibold]="isActive('glamping')"
+						>
+							⛺ Glamping
+						</a>
+					</li>
+					<li>
 						<a routerLink="/productos"
 							class="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-slate-700 hover:bg-slate-100 transition-all duration-200 hover:scale-105"
 							[class.bg-sky-100]="isActive('productos')"
